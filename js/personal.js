@@ -23,7 +23,8 @@ export function nav(r) {
     { href: '#/p/treinos', label: 'Treinos', icon: 'peso', cur: v === 'treinos' },
     { href: '#/p/agenda', label: 'Agenda', icon: 'agenda', cur: v === 'agenda' },
     { href: '#/p/fin', label: 'Financeiro', icon: 'fin', cur: v === 'fin' },
-    { href: '#/p/clientes', label: 'Possíveis clientes', icon: 'mais', cur: v === 'clientes', mobile: false }
+    { href: '#/p/clientes', label: 'Possíveis clientes', icon: 'mais', cur: v === 'clientes', mobile: false },
+    { href: '#/p/acessos', label: 'Acesso dos alunos', icon: 'enviar', cur: v === 'acessos', mobile: false }
   ];
 }
 
@@ -35,6 +36,7 @@ export function aoEntrar(r) {
   }
   if (r.path[0] === 'treinos') ui.salvo = true;
   if (r.path[0] === 'clientes') C.aoEntrarClientes();
+  if (r.path[0] === 'acessos') C.aoEntrarAcessos();
 }
 
 export function view(r) {
@@ -45,6 +47,7 @@ export function view(r) {
   if (v === 'agenda') return agendaV();
   if (v === 'fin') return finV();
   if (v === 'clientes') return C.clientesV({ anim: ui.anim });
+  if (v === 'acessos') return C.acessosV({ anim: ui.anim });
   return hojeV();
 }
 
@@ -148,7 +151,7 @@ function alunosV() {
     return true;
   });
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">30 ativos · amostra de 8</p><h1>Alunos</h1></div><div class="ph-actions"><a class="btn" href="#/p/clientes">Possíveis clientes</a><button type="button" class="btn p" data-act="novoAluno">${ic('mais', 18)}Novo aluno</button></div></header>
+    <header class="ph"><div><p class="eyebrow">30 ativos · amostra de 8</p><h1>Alunos</h1></div><div class="ph-actions"><a class="btn" href="#/p/acessos">Acesso dos alunos</a><a class="btn" href="#/p/clientes">Possíveis clientes</a><button type="button" class="btn p" data-act="novoAluno">${ic('mais', 18)}Novo aluno</button></div></header>
     <label class="field">${ic('busca', 18)}<span class="sr">Buscar aluno</span><input id="busca-aluno" type="search" placeholder="Buscar por nome ou objetivo" value="${ui.busca}" data-in="busca" autocomplete="off"></label>
     <div class="chips" role="group" aria-label="Filtrar alunos">${FILTROS.map(f => html`<button type="button" class="chip" aria-pressed="${ui.filtro === f}" data-act="filtro" data-v="${f}">${f}</button>`)}</div>
     ${lista.length ? html`<div class="grid md-g2 lg-g2 ${ui.anim ? 'stagger' : ''}">${lista.map(a => html`<a class="card row" style="padding:14px 16px" href="#/p/aluno/${a.id}">

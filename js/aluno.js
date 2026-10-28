@@ -1,6 +1,7 @@
 // Lado do aluno (Juliana): Início, Treino guiado, Evolução, Agenda, Pagamento e Chat.
 import { get, update, NOME_FICHA, DIAS, HORAS, HOJE, EU, lib, aluno } from './store.js';
 import { html, raw, ic, ui, toast, fmt, ha, rotulo, grafico, bus } from './ui.js';
+import * as C from './cadastro.js';
 
 const redraw = () => bus.render();
 const DIA_FICHA = { A: 'Quinta', B: 'Hoje', C: 'Sábado' };
@@ -55,7 +56,8 @@ function inicioV() {
   const dif = med.length > 1 ? med.at(-1).peso - med[0].peso : 0;
   const f = ficha(s, 'B');
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Terça, 27 de outubro</p><h1>Olá, Juliana</h1></div><span class="pill warn" style="gap:6px;font-size:13px;padding:6px 12px">${ic('fogo', 16)}${s.sequencia} dias seguidos</span></header>
+    <header class="ph"><div><p class="eyebrow">Terça, 27 de outubro</p><h1>Olá, ${C.alunoConta()?.nome.split(' ')[0] || 'Juliana'}</h1></div><span class="pill warn" style="gap:6px;font-size:13px;padding:6px 12px">${ic('fogo', 16)}${s.sequencia} dias seguidos</span></header>
+    ${C.alunoConta() ? html`<div class="card row" style="padding:12px 16px"><span class="grow"><span class="t">Conectado como ${C.alunoConta().nome}${C.alunoConta().treinador ? ` · aluno de ${C.alunoConta().treinador}` : ''}</span><span class="s">Treinos e medidas abaixo ainda são de exemplo; os seus chegam quando o personal montar sua ficha.</span></span><button type="button" class="btn sm" data-act="sairConta">Sair</button></div>` : ''}
     ${me.treinoNovo ? html`<a class="card row" href="#/a/treino" style="padding:12px 16px;border-color:var(--a-line)"><span class="ping" style="color:var(--a-ink)"></span><span class="grow"><span class="t">Seu personal atualizou o Treino ${me.treinoNovo}</span><span class="s">Toque para ver o que mudou</span></span>${ic('seta', 18)}</a>` : ''}
     <section class="hero" aria-label="Treino de hoje">
       <span class="lbl">Treino de hoje · 9h com o personal</span>

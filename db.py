@@ -30,10 +30,28 @@ CREATE TABLE IF NOT EXISTS treinadores (
   senha_hash    TEXT NOT NULL,
   criado_em     TEXT NOT NULL DEFAULT (datetime('now'))
 );
+CREATE TABLE IF NOT EXISTS alunos_contas (
+  id            INTEGER PRIMARY KEY,
+  treinador_id  INTEGER NOT NULL REFERENCES treinadores(id) ON DELETE CASCADE,
+  nome          TEXT NOT NULL CHECK (length(nome) BETWEEN 2 AND 120),
+  email         TEXT NOT NULL UNIQUE COLLATE NOCASE CHECK (length(email) <= 160),
+  telefone      TEXT NOT NULL CHECK (length(telefone) IN (10, 11)),
+  senha_hash    TEXT,
+  aceite_lgpd   TEXT,
+  criado_em     TEXT NOT NULL DEFAULT (datetime('now')),
+  ativado_em    TEXT
+);
+CREATE TABLE IF NOT EXISTS convites (
+  token_hash    TEXT PRIMARY KEY,
+  aluno_id      INTEGER NOT NULL REFERENCES alunos_contas(id) ON DELETE CASCADE,
+  expira_em     INTEGER NOT NULL
+);
 CREATE TABLE IF NOT EXISTS sessoes (
   token_hash    TEXT PRIMARY KEY,
-  treinador_id  INTEGER NOT NULL REFERENCES treinadores(id) ON DELETE CASCADE,
-  expira_em     INTEGER NOT NULL
+  treinador_id  INTEGER REFERENCES treinadores(id) ON DELETE CASCADE,
+  aluno_id      INTEGER REFERENCES alunos_contas(id) ON DELETE CASCADE,
+  expira_em     INTEGER NOT NULL,
+  CHECK ((treinador_id IS NULL) <> (aluno_id IS NULL))
 );
 CREATE TABLE IF NOT EXISTS clientes (
   id            INTEGER PRIMARY KEY,
@@ -52,6 +70,7 @@ CREATE TABLE IF NOT EXISTS clientes (
 );
 CREATE INDEX IF NOT EXISTS idx_clientes_treinador ON clientes (treinador_id, status);
 CREATE INDEX IF NOT EXISTS idx_sessoes_treinador ON sessoes (treinador_id);
+CREATE INDEX IF NOT EXISTS idx_alunos_treinador ON alunos_contas (treinador_id);
 """
 
 STATUS = ("interessado", "experimental", "aluno", "desistiu")
@@ -80,7 +99,12 @@ def iniciar():
         if "senha_hash" not in colunas:  # banco antigo, sem senha: recomeça a tabela (só havia teste)
             con.executescript("DROP TABLE IF EXISTS clientes; DROP TABLE IF EXISTS treinadores;")
             con.executescript(ESQUEMA)
-        con.execute("DELETE FROM sessoes WHERE expira_em < ?", (int(time.time()),))
+        if "aluno_id" not in {r["name"] for r in con.execute("PRAGMA table_info(sessoes)")}:
+            con.executescript("DROP TABLE sessoes;")  # sessões antigas só de treinador: basta entrar de novo
+            con.executescript(ESQUEMA)
+        agora = int(time.time())
+        con.execute("DELETE FROM sessoes WHERE expira_em < ?", (agora,))
+        con.execute("DELETE FROM convites WHERE expira_em < ?", (agora,))
         con.commit()
 
 
@@ -130,22 +154,31 @@ def _h(token):
     return hashlib.sha256(token.encode()).hexdigest()
 
 
-def abrir_sessao(tid):
+def abrir_sessao(tid=None, aid=None):
     token = secrets.token_urlsafe(32)
     with closing(conectar()) as con:
-        con.execute("INSERT INTO sessoes (token_hash, treinador_id, expira_em) VALUES (?, ?, ?)",
-                    (_h(token), tid, int(time.time()) + DURACAO))
+        con.execute("INSERT INTO sessoes (token_hash, treinador_id, aluno_id, expira_em) VALUES (?, ?, ?, ?)",
+                    (_h(token), tid, aid, int(time.time()) + DURACAO))
         con.commit()
     return token
 
 
-def treinador_da_sessao(token):
+def _sessao(token):
     if not token or len(token) > 100:
         return None
     with closing(conectar()) as con:
-        r = con.execute("SELECT treinador_id FROM sessoes WHERE token_hash = ? AND expira_em > ?",
-                        (_h(token), int(time.time()))).fetchone()
-        return r["treinador_id"] if r else None
+        return con.execute("SELECT treinador_id, aluno_id FROM sessoes WHERE token_hash = ? AND expira_em > ?",
+                           (_h(token), int(time.time()))).fetchone()
+
+
+def treinador_da_sessao(token):
+    r = _sessao(token)
+    return r["treinador_id"] if r else None
+
+
+def aluno_da_sessao(token):
+    r = _sessao(token)
+    return r["aluno_id"] if r else None
 
 
 def fechar_sessao(token):
@@ -179,13 +212,14 @@ def limpar_falhas(chave):
         _falhas.pop(chave, None)
 
 
-def login(email, senha, ip):
+def login(email, senha, ip, tipo="treinador"):
     email = texto(email, 160).lower()
     chaves = ("ip:" + ip, "email:" + email)
     if any(bloqueado(c) for c in chaves):
         raise PermissionError("Muitas tentativas. Espere 15 minutos e tente de novo.")
+    tabela = "alunos_contas" if tipo == "aluno" else "treinadores"
     with closing(conectar()) as con:
-        r = con.execute("SELECT * FROM treinadores WHERE email = ?", (email,)).fetchone()
+        r = con.execute(f"SELECT * FROM {tabela} WHERE email = ? AND senha_hash IS NOT NULL", (email,)).fetchone()
     ok = conferir_senha(str(senha or ""), r["senha_hash"] if r else FALSO)
     if not (r and ok):
         for c in chaves:
@@ -193,7 +227,7 @@ def login(email, senha, ip):
         raise ErroValidacao({"geral": "E-mail ou senha incorretos."})
     for c in chaves:
         limpar_falhas(c)
-    return publico_treinador(r)
+    return publico_aluno(r) if tipo == "aluno" else publico_treinador(r)
 
 
 # ---------- validação ----------
@@ -253,7 +287,7 @@ def fmt_tel(t):
 
 
 def publico_treinador(r):
-    return {"id": r["id"], "nome": r["nome"], "email": r["email"], "telefone": fmt_tel(r["telefone"]),
+    return {"id": r["id"], "tipo": "treinador", "nome": r["nome"], "email": r["email"], "telefone": fmt_tel(r["telefone"]),
             "cpf": mascara_cpf(r["cpf"]), "criado_em": r["criado_em"]}
 
 
@@ -354,3 +388,109 @@ def excluir_cliente(tid, cid):
         con.commit()
         if not n:
             raise LookupError("cliente")
+
+
+# ---------- contas de aluno e convites ----------
+# O personal cadastra o aluno; o app gera um link de convite (válido por 7 dias, uso único).
+# O aluno abre o link e cria a própria senha. O banco guarda só o hash do convite e da senha.
+VALIDADE_CONVITE = 7 * 24 * 3600
+
+
+def publico_aluno(r, treinador_nome=None):
+    return {"id": r["id"], "tipo": "aluno", "nome": r["nome"], "email": r["email"], "telefone": fmt_tel(r["telefone"]),
+            "whats": "55" + r["telefone"], "ativo": bool(r["senha_hash"]), "ativado_em": r["ativado_em"],
+            "criado_em": r["criado_em"], **({"treinador": treinador_nome} if treinador_nome else {})}
+
+
+def _novo_convite(con, aid):
+    token = secrets.token_urlsafe(24)
+    con.execute("DELETE FROM convites WHERE aluno_id = ?", (aid,))
+    con.execute("INSERT INTO convites (token_hash, aluno_id, expira_em) VALUES (?, ?, ?)",
+                (_h(token), aid, int(time.time()) + VALIDADE_CONVITE))
+    return token
+
+
+def criar_aluno_conta(tid, d):
+    erros, p = validar_pessoa(d, cpf_obrigatorio=False, email_obrigatorio=True, nome_completo=False)
+    if erros:
+        raise ErroValidacao(erros)
+    with closing(conectar()) as con:
+        try:
+            cur = con.execute("INSERT INTO alunos_contas (treinador_id, nome, email, telefone) VALUES (?, ?, ?, ?)",
+                              (tid, p["nome"], p["email"], p["telefone"]))
+        except sqlite3.IntegrityError:
+            raise ErroValidacao({"email": "Já existe um aluno com este e-mail."})
+        token = _novo_convite(con, cur.lastrowid)
+        con.commit()
+        r = con.execute("SELECT * FROM alunos_contas WHERE id = ?", (cur.lastrowid,)).fetchone()
+        return {**publico_aluno(r), "convite": token}
+
+
+def listar_alunos_contas(tid):
+    with closing(conectar()) as con:
+        rs = con.execute("SELECT * FROM alunos_contas WHERE treinador_id = ? ORDER BY datetime(criado_em) DESC, id DESC", (tid,)).fetchall()
+        return [publico_aluno(r) for r in rs]
+
+
+def renovar_convite(tid, aid):
+    with closing(conectar()) as con:
+        r = con.execute("SELECT * FROM alunos_contas WHERE id = ? AND treinador_id = ?", (aid, tid)).fetchone()
+        if not r:
+            raise LookupError("aluno")
+        if r["senha_hash"]:
+            raise ErroValidacao({"geral": "Este aluno já ativou a conta."})
+        token = _novo_convite(con, aid)
+        con.commit()
+        return {**publico_aluno(r), "convite": token}
+
+
+def excluir_aluno_conta(tid, aid):
+    with closing(conectar()) as con:
+        n = con.execute("DELETE FROM alunos_contas WHERE id = ? AND treinador_id = ?", (aid, tid)).rowcount
+        con.commit()
+        if not n:
+            raise LookupError("aluno")
+
+
+def _convite_valido(con, token):
+    if not token or len(token) > 100:
+        return None
+    return con.execute(
+        "SELECT a.*, t.nome AS treinador_nome FROM convites c JOIN alunos_contas a ON a.id = c.aluno_id "
+        "JOIN treinadores t ON t.id = a.treinador_id WHERE c.token_hash = ? AND c.expira_em > ? AND a.senha_hash IS NULL",
+        (_h(token), int(time.time()))).fetchone()
+
+
+def ler_convite(token):
+    with closing(conectar()) as con:
+        r = _convite_valido(con, token)
+        return {"nome": r["nome"], "email": r["email"], "treinador": r["treinador_nome"]} if r else None
+
+
+def aceitar_convite(token, d):
+    with closing(conectar()) as con:
+        r = _convite_valido(con, token)
+        if not r:
+            raise LookupError("convite")
+        erros = {}
+        erro_senha = regra_senha(d.get("senha"), r["email"])
+        if erro_senha:
+            erros["senha"] = erro_senha
+        elif d.get("senha") != d.get("confirmacao"):
+            erros["confirmacao"] = "As senhas não são iguais."
+        if d.get("aceite") is not True:
+            erros["aceite"] = "É preciso aceitar os termos e a política de privacidade."
+        if erros:
+            raise ErroValidacao(erros)
+        con.execute("UPDATE alunos_contas SET senha_hash = ?, aceite_lgpd = datetime('now'), ativado_em = datetime('now') WHERE id = ?",
+                    (gerar_hash(d["senha"]), r["id"]))
+        con.execute("DELETE FROM convites WHERE aluno_id = ?", (r["id"],))  # convite de uso único
+        con.commit()
+        return publico_aluno(con.execute("SELECT * FROM alunos_contas WHERE id = ?", (r["id"],)).fetchone(), r["treinador_nome"])
+
+
+def obter_aluno(aid):
+    with closing(conectar()) as con:
+        r = con.execute("SELECT a.*, t.nome AS treinador_nome FROM alunos_contas a JOIN treinadores t ON t.id = a.treinador_id WHERE a.id = ?",
+                        (aid,)).fetchone()
+        return publico_aluno(r, r["treinador_nome"]) if r else None

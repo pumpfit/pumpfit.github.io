@@ -46,7 +46,7 @@ const PULSO = '<svg class="pulse" viewBox="0 0 1100 56" preserveAspectRatio="non
 const marca = html`<a class="brand" href="#/" aria-label="Pump, página inicial">${raw(SIMBOLO)}${raw(LOGOTIPO)}</a>`;
 
 function layout(role, itens, conteudo) {
-  const quem = role === 'p' ? 'Personal · ' + (C.conta()?.nome || '[Nome do personal]') : 'Aluna · Juliana Costa';
+  const quem = role === 'p' ? 'Personal · ' + (C.conta()?.nome || '[Nome do personal]') : 'Aluno · ' + (C.alunoConta()?.nome || 'Juliana Costa (exemplo)');
   const escuro = document.documentElement.dataset.theme !== 'light';
   const temaBtn = (cls) => html`<button type="button" class="${cls}" data-act="tema" aria-label="${escuro ? 'Usar tema claro' : 'Usar tema escuro'}">${ic(escuro ? 'sol' : 'lua', 18)}${cls.includes('icon') ? '' : (escuro ? 'Tema claro' : 'Tema escuro')}</button>`;
   const link = (i, cls = '') => html`<a href="${i.href}" class="${cls}" ${i.cur ? raw('aria-current="page"') : ''}>${ic(i.icon, 22)}<span>${i.label}</span>${i.dot ? html`<span class="dot" aria-label="Novidade"></span>` : ''}</a>`;
@@ -81,6 +81,7 @@ function render() {
     ui.slot = null; ui.biblio = false; ui.remarcar = null;
     if (r.role === 'p') P.aoEntrar?.(r);
     if (r.role === 'a') A.aoEntrar?.(r);
+    if (r.role === 'convite') C.aoEntrarConvite(r.path[0]);
   }
   const ativo = document.activeElement;
   const foco = ativo?.id || null;
@@ -90,6 +91,7 @@ function render() {
     : r.role === 'a' ? layout('a', A.nav(r), A.view(r))
     : r.role === 'cadastro' ? C.cadastroV({ marca, anim: mudou })
     : r.role === 'entrar' ? C.entrarV({ marca, anim: mudou })
+    : r.role === 'convite' ? C.conviteV({ marca, anim: mudou })
     : landing();
   desmontar?.(); desmontar = null;
   app.innerHTML = out.__raw;

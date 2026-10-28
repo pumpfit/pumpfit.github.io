@@ -134,19 +134,32 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.responder_cookie(201, t, self.cookie(db.abrir_sessao(t["id"]), db.DURACAO))
             if rota == "/api/sessao" and m == "POST":
                 d = self.corpo()
+                tipo = "aluno" if d.get("tipo") == "aluno" else "treinador"
                 try:
-                    t = db.login(d.get("email"), d.get("senha"), self.ip())
+                    t = db.login(d.get("email"), d.get("senha"), self.ip(), tipo)
                 except PermissionError as e:
                     return self.responder(429, {"erro": str(e)})
-                return self.responder_cookie(200, t, self.cookie(db.abrir_sessao(t["id"]), db.DURACAO))
+                sessao = db.abrir_sessao(aid=t["id"]) if tipo == "aluno" else db.abrir_sessao(t["id"])
+                return self.responder_cookie(200, t, self.cookie(sessao, db.DURACAO))
             if rota == "/api/sessao" and m == "DELETE":
                 db.fechar_sessao(self.token())
                 return self.responder_cookie(200, {}, self.cookie("", 0))
 
+            # Convite do aluno (o link é a única "chave"; vale 7 dias e uma vez só)
+            r = re.fullmatch(r"/api/convite/([A-Za-z0-9_-]{16,64})", rota)
+            if r and m == "GET":
+                c = db.ler_convite(r[1])
+                return self.responder(200, c) if c else self.responder(404, {"erro": "Convite inválido, vencido ou já usado."})
+            if r and m == "POST":
+                a = db.aceitar_convite(r[1], self.corpo())
+                return self.responder_cookie(201, a, self.cookie(db.abrir_sessao(aid=a["id"]), db.DURACAO))
+
             tid = db.treinador_da_sessao(self.token())
             if rota == "/api/sessao" and m == "GET":
-                t = db.obter_treinador(tid) if tid else None
-                return self.responder(200, t or {})  # sem sessão não é erro: responde vazio
+                if tid:
+                    return self.responder(200, db.obter_treinador(tid) or {})
+                aid = db.aluno_da_sessao(self.token())
+                return self.responder(200, (db.obter_aluno(aid) if aid else None) or {})  # sem sessão: vazio
             if not tid:
                 return self.responder(401, {"erro": "Entre na sua conta."})
             if rota == "/api/conta" and m == "DELETE":
@@ -163,6 +176,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.responder(200, db.mudar_status(tid, int(r[1]), self.corpo().get("status")))
             if r and m == "DELETE":
                 db.excluir_cliente(tid, int(r[1]))
+                return self.responder(204)
+
+            # Contas de aluno (o personal convida; só vê os próprios alunos)
+            if rota == "/api/alunos" and m == "GET":
+                return self.responder(200, db.listar_alunos_contas(tid))
+            if rota == "/api/alunos" and m == "POST":
+                return self.responder(201, db.criar_aluno_conta(tid, self.corpo()))
+            r = re.fullmatch(r"/api/alunos/(\d+)/convite", rota)
+            if r and m == "POST":
+                return self.responder(200, db.renovar_convite(tid, int(r[1])))
+            r = re.fullmatch(r"/api/alunos/(\d+)", rota)
+            if r and m == "DELETE":
+                db.excluir_aluno_conta(tid, int(r[1]))
                 return self.responder(204)
             return self.responder(404, {"erro": "Rota não encontrada."})
         except db.ErroValidacao as e:
