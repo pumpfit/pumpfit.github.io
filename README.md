@@ -20,3 +20,9 @@ Abra http://localhost:5173. Requer só Python 3.10+ (sem bibliotecas extras).
 - `db.py`: banco de dados, senhas e sessões
 - `brand/`: manual da marca e logos
 - `Dockerfile`: para publicar em hospedagem com servidor
+
+## No ar (servidor completo)
+- https://pumpfit.pythonanywhere.com — PythonAnywhere grátis, conta Pumpfit. Banco em `~/dados/pump.db` (fora da pasta do site).
+- Atualizar: no console Bash do PythonAnywhere, `cd ~/pump && git pull`, depois "Reload" na aba Web.
+- Plano grátis: entrar 1 vez por mês na aba Web e clicar em "Run until 1 month from today", senão o site é desligado.
+- https://pumpfit.github.io continua como vitrine; lá a conta fica só no aparelho.

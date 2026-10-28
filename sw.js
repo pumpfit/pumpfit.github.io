@@ -1,5 +1,5 @@
 // Modo sem internet: guarda os arquivos do app. Online, busca sempre a versão nova; offline, usa a guardada.
-const CACHE = 'pump-v11';
+const CACHE = 'pump-v12';
 const ARQUIVOS = ['./', 'index.html', 'css/app.css', 'css/landing.css', 'js/landing.js', 'js/cadastro.js', 'js/local.js', 'js/app.js', 'js/store.js', 'js/ui.js', 'js/personal.js', 'js/aluno.js', 'icon.svg', 'manifest.webmanifest'];
 
 self.addEventListener('install', e => {
