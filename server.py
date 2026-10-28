@@ -12,7 +12,7 @@ import sys
 
 import db
 
-PORTA = int(sys.argv[1]) if len(sys.argv) > 1 else 5173
+PORTA = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 5173
 PASTA = os.path.dirname(os.path.abspath(__file__))
 LIMITE = 16 * 1024  # corpo máximo de uma requisição
 
