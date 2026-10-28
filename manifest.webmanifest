@@ -1,0 +1,14 @@
+{
+  "name": "Pump",
+  "short_name": "Pump",
+  "description": "Treinos, agenda, evolução e mensalidades entre personal e aluno.",
+  "lang": "pt-BR",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0B0B0C",
+  "theme_color": "#0B0B0C",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
