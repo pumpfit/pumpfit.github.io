@@ -47,6 +47,35 @@ const P = {
 };
 export const ic = (n, s = 20) => raw(`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || ''}</svg>`);
 
+// Letreiro de virar (painel de aeroporto): cada caractere numa plaquinha.
+// `k` identifica o letreiro entre um desenho e outro, para girar só o que mudou.
+const celula = (c, i) => c === ' ' ? '<i class="sp" aria-hidden="true"></i>'
+  : `<i aria-hidden="true" class="${/[0-9A-Za-zÀ-ú]/.test(c) ? '' : 'p'}" style="--i:${i}">${esc(c)}</i>`;
+const celulas = t => [...String(t)].map(celula).join('');
+export const flap = (txt, k = '') => raw(`<span class="sf" data-sf="${esc(k)}" data-v="${esc(txt)}"><span class="sr">${esc(txt)}</span>${celulas(txt)}</span>`);
+
+// Troca o texto de um letreiro já na tela, girando só as plaquinhas que mudaram.
+export function setFlap(el, txt) {
+  if (!el) return;
+  const t = String(txt);
+  const antes = el.dataset.v || '';
+  if (antes === t) return;
+  el.dataset.v = t;
+  el.innerHTML = `<span class="sr">${esc(t)}</span>${celulas(t)}`;
+  el.querySelectorAll('i').forEach((c, i) => { if (antes.length !== t.length || antes[i] !== t[i]) c.classList.add('go'); });
+}
+
+// Depois de redesenhar: gira os letreiros que mudaram, ou todos ao entrar numa tela nova.
+export function virarLetreiros(root, antes, tudo) {
+  root.querySelectorAll('.sf').forEach(el => {
+    const velho = antes.get(el.dataset.sf);
+    const novo = el.dataset.v || '';
+    if (!tudo && (velho == null || velho === novo)) return;
+    if (tudo && el.closest('.rv')) return; // os que aparecem ao rolar giram quando entram na tela
+    el.querySelectorAll('i').forEach((c, i) => { if (tudo || velho.length !== novo.length || velho[i] !== novo[i]) c.classList.add('go'); });
+  });
+}
+
 // Aviso curto no rodapé da tela.
 let tt;
 export function toast(msg) {

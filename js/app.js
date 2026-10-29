@@ -1,6 +1,6 @@
 // Entrada do app: rotas, layout (menu lateral no computador, abas no celular), eventos e tema.
 import { subscribe, reset, get } from './store.js';
-import { html, raw, ic, ui, toast, bus } from './ui.js';
+import { html, raw, ic, ui, toast, bus, virarLetreiros } from './ui.js';
 import * as P from './personal.js';
 import * as A from './aluno.js';
 import * as L from './landing.js';
@@ -11,7 +11,7 @@ const TEMA = 'app-personal:tema';
 
 function aplicarTema(t) {
   document.documentElement.dataset.theme = t;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0A0B0D');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#FFC400');
 }
 let tema;
 try { tema = localStorage.getItem(TEMA); } catch { /* sem armazenamento */ }
@@ -40,7 +40,7 @@ const rota = () => {
 };
 
 // Marca Pump (ver brand/index.html): código PMP de painel de partidas + quadrado laranja de "mudou".
-const SIMBOLO = '<svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" fill="#101215"/><g fill="none" stroke="#F2F2EE" stroke-width="40" stroke-linecap="square" transform="translate(-15 0)"><path d="M96 331V181H146Q186 181 186 221Q186 261 146 261H96"/><path d="M226 331V181L266 251L306 181V331"/><path d="M356 331V181H406Q446 181 446 221Q446 261 406 261H356"/></g><rect x="392" y="80" width="44" height="44" fill="#FF6A13"/></svg>';
+const SIMBOLO = '<svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" fill="#101215"/><g fill="none" stroke="#F2F2EE" stroke-width="40" stroke-linecap="square" transform="translate(-15 0)"><path d="M96 331V181H146Q186 181 186 221Q186 261 146 261H96"/><path d="M226 331V181L266 251L306 181V331"/><path d="M356 331V181H406Q446 181 446 221Q446 261 406 261H356"/></g><rect x="392" y="80" width="44" height="44" fill="#FF4D1F"/></svg>';
 const LOGOTIPO = '<span class="wordmark">Pump</span>';
 const marca = html`<a class="brand" href="#/" aria-label="Pump, página inicial">${raw(SIMBOLO)}${raw(LOGOTIPO)}</a>`;
 
@@ -95,10 +95,12 @@ function render() {
   // Painel de partidas: guarda onde cada linha estava para ela deslizar até o novo lugar.
   const antes = new Map();
   if (!mudou) app.querySelectorAll('[data-flip]').forEach(el => antes.set(el.dataset.flip, { y: el.getBoundingClientRect().top, st: el.dataset.st }));
+  const letreiros = new Map([...app.querySelectorAll('.sf[data-sf]')].map(el => [el.dataset.sf, el.dataset.v || '']));
   desmontar?.(); desmontar = null;
   app.innerHTML = out.__raw;
   if (!r.role) desmontar = L.mount(app);
   if (antes.size) reordenar(antes);
+  virarLetreiros(app, letreiros, mudou);
 
   if (mudou) {
     ultimo = chave;

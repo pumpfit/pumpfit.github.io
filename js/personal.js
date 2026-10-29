@@ -1,6 +1,6 @@
 // Lado do personal: Hoje, Alunos (ficha), Treinos (editor), Agenda e Financeiro.
 import { get, update, LIB, GRUPOS, NOME_FICHA, DIAS, HORAS, HOJE, lib, uid, padraoSR, aluno, primeiro, iniciais } from './store.js';
-import { html, raw, ic, ui, toast, fmt, ha, mesCurto, rotulo, grafico, bus } from './ui.js';
+import { html, raw, ic, ui, toast, fmt, ha, mesCurto, rotulo, grafico, bus, flap } from './ui.js';
 import * as C from './cadastro.js';
 
 const PAG = { ok: ['Em dia', 'ok'], atraso: ['Atrasada', 'warn'], pix: ['Pix enviado', 'info'] };
@@ -125,10 +125,10 @@ function hojeV() {
     </header>
 
     <section class="band" aria-label="Resumo do dia">
-      <a href="#/p/alunos"><span class="lbl">Alunos ativos</span><span class="num">30</span><span class="small muted">Ver todos</span></a>
-      <a href="#/p/agenda"><span class="lbl">Aulas hoje</span><span class="num">${ag.length}</span><span class="small muted">${feitas} feitas · ${prox ? 'próxima ' + prox.h : 'dia encerrado'}</span></a>
-      <a href="#/p/fin"><span class="lbl">Em dia</span><span class="num">${emDia}<small>/${total}</small></span><span class="small muted">mensalidades de outubro</span></a>
-      <div class="${pend + mudancas ? 'chg' : ''}"><span class="lbl">Precisa de você</span><span class="num">${pend + mudancas}</span><span class="small muted">${mudancas ? `${mudancas} ${mudancas > 1 ? 'mudanças' : 'mudança'} na agenda · ` : ''}${pend} ${pend === 1 ? 'alerta' : 'alertas'}</span></div>
+      <a href="#/p/alunos"><span class="lbl">Alunos ativos</span><span class="num">${flap('30', 'b-ativos')}</span><span class="small muted">Ver todos</span></a>
+      <a href="#/p/agenda"><span class="lbl">Aulas hoje</span><span class="num">${flap(String(ag.length), 'b-aulas')}</span><span class="small muted">${feitas} feitas · ${prox ? 'próxima ' + prox.h : 'dia encerrado'}</span></a>
+      <a href="#/p/fin"><span class="lbl">Em dia</span><span class="num">${flap(String(emDia), 'b-dia')}<small>/${total}</small></span><span class="small muted">mensalidades de outubro</span></a>
+      <div class="${pend + mudancas ? 'chg' : ''}"><span class="lbl">Precisa de você</span><span class="num">${flap(String(pend + mudancas), 'b-precisa')}</span><span class="small muted">${mudancas ? `${mudancas} ${mudancas > 1 ? 'mudanças' : 'mudança'} na agenda · ` : ''}${pend} ${pend === 1 ? 'alerta' : 'alertas'}</span></div>
     </section>
 
     <div class="grid lg-21" style="gap:28px 36px">
@@ -141,7 +141,7 @@ function hojeV() {
             const sit = situacao(x);
             const k = FICHA_HOJE[a?.obj] || 'B';
             return html`<tr class="${sit.cls}" data-flip="${x.id}" data-st="${sit.st}">
-              <td class="h">${x.h}</td>
+              <td class="h">${flap(x.h, 'h-' + x.id)}</td>
               <td class="who"><a href="#/p/aluno/${x.id}">${a?.nome || 'Aluno'}</a><span>${a?.obj || ''}</span></td>
               <td class="fx">${k} · ${NOME_FICHA[k]}</td>
               <td class="st"><b>${sit.txt}</b>${x.chg ? html`<button type="button" class="btn sm" data-act="visto" data-k="${HOJE}-${x.h}">Visto</button>`

@@ -1,7 +1,7 @@
 // Página de entrada do Pump: o painel de partidas do dia do personal, ao vivo.
 // O único movimento é o do painel: a linha que muda desliza até o novo lugar (transform)
 // e a situação vira como uma placa. Só roda com o painel visível; quem pede menos movimento vê o painel parado.
-import { html, ic } from './ui.js';
+import { html, ic, flap, setFlap } from './ui.js';
 
 const RECURSOS = [
   ['peso', 'Treinos que o aluno segue', 'Ficha com vídeo, carga e descanso. Cada série marcada no celular chega para você na hora.'],
@@ -28,6 +28,10 @@ const QUADROS = [
   [['pedro', '10:30', 'prox'], ['carla', '18:00', 'conf'], ['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita']],
   [['carla', '08:00', 'prox'], ['juliana', '09:00', 'conf'], ['pedro', '10:30', 'conf'], ['marina', '07:00', 'feita']]
 ];
+// Placas da faixa que corre: setas e destinos, como no saguão do aeroporto.
+const PLACAS = [['seta', 'Treinos'], ['evo', 'Evolução'], ['agenda', 'Agenda'], ['pix', 'Mensalidades'], ['chat', 'Chat com o aluno'], ['sino', 'Alertas'], ['alunos', 'Alunos']];
+const proxima = q => { const p = q.find(x => x[2] === 'prox'); return p ? `${p[1]} ${ALUNOS[p[0]][0].split(' ')[0].toUpperCase()}` : '--:--'; };
+
 const SIT = {
   prox: ['is-now', 'Próxima', 'Presença'],
   conf: ['', 'Confirmada', ''],
@@ -39,7 +43,7 @@ const linha = ([id, h, st]) => {
   const [nome, obj, ficha] = ALUNOS[id];
   const [cls, txt, btn] = SIT[st];
   return html`<tr class="${cls}" data-id="${id}" data-st="${st}">
-    <td class="h">${h}</td>
+    <td class="h">${flap(h, 'lh-' + id)}</td>
     <td class="who"><a tabindex="-1">${nome}</a><span>${obj}</span></td>
     <td class="fx">${ficha}</td>
     <td class="st"><b>${txt}</b>${btn ? html`<span class="btn sm">${btn}</span>` : ''}</td>
@@ -67,6 +71,7 @@ export function view({ marca }) {
 
       <figure class="lp-board lp-in" style="--d:2" aria-label="Exemplo: o painel de partidas de um dia de personal">
         <figcaption class="lp-board-h"><strong>Partidas de hoje</strong><span class="mono">Ter 27 out · exemplo</span></figcaption>
+        <div class="lp-next" aria-hidden="true"><span class="lbl">Próxima</span>${flap(proxima(QUADROS[0]), 'lp-next')}</div>
         <table class="brd" aria-hidden="true">
           <thead><tr><th>Hora</th><th>Aluno</th><th class="fx">Ficha</th><th>Situação</th></tr></thead>
           <tbody>${QUADROS[0].map(linha)}</tbody>
@@ -75,9 +80,11 @@ export function view({ marca }) {
       </figure>
     </section>
 
+    <div class="lp-signs" aria-hidden="true"><div class="lp-signs-run">${[...PLACAS, ...PLACAS].map(([i, t]) => html`<span class="lp-plate"><b>${ic(i, 20)}</b>${t}</span>`)}</div></div>
+
     <section class="lp-sec" id="recursos">
       <div class="lp-head rv"><h2>Tudo que o personal precisa, nada que atrapalha</h2></div>
-      <div class="lp-feats">${RECURSOS.map(([i, t, d], k) => html`<article class="lp-feat rv" style="--d:${k}"><span class="lp-ic">${ic(i, 22)}</span><h3>${t}</h3><p>${d}</p></article>`)}</div>
+      <div class="lp-feats">${RECURSOS.map(([i, t, d], k) => html`<article class="lp-feat rv" style="--d:${k}"><span class="lp-ic">${flap('0' + (k + 1), 'lp-f' + k)}</span><h3>${t}</h3><p>${d}</p></article>`)}</div>
     </section>
 
     <section class="lp-sec" id="como">
@@ -110,6 +117,7 @@ export function mount(root) {
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add('in');
+    if (!calmo) e.target.querySelectorAll('.sf i').forEach(c => c.classList.add('go'));
     io.unobserve(e.target);
   }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
   lp.querySelectorAll('.rv').forEach(el => io.observe(el));
@@ -133,10 +141,11 @@ export function mount(root) {
   const aplicar = q => {
     const antes = new Map([...corpo.rows].map(r => [r.dataset.id, { y: r.getBoundingClientRect().top, st: r.dataset.st }]));
     corpo.innerHTML = q.map(linha).map(x => x.__raw).join('');
+    setFlap(board.querySelector('.lp-next .sf'), proxima(q));
     [...corpo.rows].forEach(r => {
       const a = antes.get(r.dataset.id);
       if (!a) return;
-      if (a.st !== r.dataset.st) r.querySelector('.st b')?.classList.add('flap');
+      if (a.st !== r.dataset.st) { r.querySelector('.st b')?.classList.add('flap'); r.querySelectorAll('.sf i').forEach(c => c.classList.add('go')); }
       const dy = a.y - r.getBoundingClientRect().top;
       if (dy) r.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 520, easing: 'cubic-bezier(.2,.8,.2,1)' });
     });

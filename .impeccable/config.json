@@ -92,6 +92,15 @@
         ],
         "createdAt": "2026-10-29T21:19:06.603Z",
         "reason": "Jarvis: unico caso e a amostra de titulo em Barlow Condensed 44px no manual da marca; altura de linha 1 e intencional para letra de titulo, nao e texto corrido"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-29T21:40:40.277Z",
+        "reason": "Jarvis: Eduardo pediu mais efeitos de movimento na pagina de entrada; a faixa de placas e decorativa (aria-hidden), repete os destinos do app, pausa com o mouse e para com reduzir movimento"
       }
     ]
   }

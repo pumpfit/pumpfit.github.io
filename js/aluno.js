@@ -1,6 +1,6 @@
 // Lado do aluno (Juliana): Início, Treino guiado, Evolução, Agenda, Pagamento e Chat.
 import { get, update, NOME_FICHA, DIAS, HORAS, HOJE, EU, lib, aluno } from './store.js';
-import { html, raw, ic, ui, toast, fmt, ha, rotulo, grafico, bus } from './ui.js';
+import { html, raw, ic, ui, toast, fmt, ha, rotulo, grafico, bus, flap, setFlap } from './ui.js';
 import * as C from './cadastro.js';
 
 const redraw = () => bus.render();
@@ -135,7 +135,7 @@ function treinandoV() {
 
     <div class="feed-item ${novo ? 'snap' : ''}">
       <div class="feed-media">
-        <span class="feed-n num" aria-hidden="true">${String(t.ex + 1).padStart(2, '0')}</span>
+        <span class="feed-n" aria-hidden="true">${flap(String(t.ex + 1).padStart(2, '0'), 'feed-n')}</span>
         <h1>${e.L.nome}</h1>
         <p class="feed-meta">${e.L.grupo} · ${e.series} séries de ${e.reps}${e.L.seg ? ' s' : ''}${e.carga ? ' · ' + e.carga + ' kg na ficha' : ''}</p>
         ${ui.dica ? html`<p class="feed-dica enter"><strong>Dica do personal:</strong> ${e.L.dica}</p>` : ''}
@@ -154,7 +154,7 @@ function treinandoV() {
             <div><div class="stp-lbl">${e.L.seg ? 'Segundos' : 'Repetições'}</div><div class="stp"><button type="button" aria-label="Menos repetições" data-act="trAj" data-f="reps" data-dt="-1">${ic('menos', 18)}</button><output>${t.reps}</output><button type="button" aria-label="Mais repetições" data-act="trAj" data-f="reps" data-dt="1">${ic('mais', 18)}</button></div></div>
           </div>
           <div style="display:flex;gap:8px">
-            <button type="button" class="rest ${t.resto > 0 ? '' : 'pronto'}" data-act="pularDescanso" aria-label="Pular descanso"><span class="lbl" style="font-size:10.5px">${t.resto > 0 ? 'Descanso' : 'Descansou'}</span><span class="num tnum" id="resto-txt">${t.resto > 0 ? relogio(t.resto) : 'Pronto'}</span><span class="bar"><i id="resto-bar" style="transform:scaleX(${frac})"></i></span></button>
+            <button type="button" class="rest ${t.resto > 0 ? '' : 'pronto'}" data-act="pularDescanso" aria-label="Pular descanso"><span class="lbl" style="font-size:10.5px">${t.resto > 0 ? 'Descanso' : 'Descansou'}</span><span class="num" id="resto-txt">${t.resto > 0 ? flap(relogio(t.resto), 'resto') : 'Pronto'}</span><span class="bar"><i id="resto-bar" style="transform:scaleX(${frac})"></i></span></button>
             <button type="button" class="btn p lg" style="flex:1" data-act="concluirSerie">Concluir série ${t.serie + 1}</button>
           </div>`
         : html`<button type="button" class="btn p lg block" data-act="proximoEx">${ultimo ? 'Finalizar treino' : 'Próximo exercício'}${ic('seta', 18)}</button>`}
@@ -285,7 +285,7 @@ function descanso(seg) {
     if (t.resto <= 0) { t.resto = 0; clearInterval(timer); redraw(); return; }
     const txt = document.getElementById('resto-txt');
     const bar = document.getElementById('resto-bar');
-    if (txt) txt.textContent = relogio(t.resto);
+    if (txt) setFlap(txt.querySelector('.sf'), relogio(t.resto));
     if (bar) bar.style.transform = `scaleX(${(t.resto / t.total).toFixed(3)})`;
   }, 1000);
 }
