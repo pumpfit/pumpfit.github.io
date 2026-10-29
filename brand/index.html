@@ -4,166 +4,127 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pump · manual da marca</title>
-<meta name="description" content="Identidade visual do Pump: símbolo, logotipo, cores, tipografia e regras de uso.">
-<link rel="icon" href="pump-batimento.svg" type="image/svg+xml">
+<meta name="description" content="Identidade visual do Pump: marca PMP, cores e a função de cada uma, letras, situações e regras de uso.">
+<link rel="icon" href="pump-marca-escuro.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../css/app.css">
 <style>
-:root{--bg:#0B0B0C;--s1:#131315;--s2:#1B1B1E;--line:rgba(255,255,255,.08);--tx:#F4F4F5;--tx2:#A1A1AA;--a:#D4FF3A}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-main{max-width:1120px;margin:0 auto;padding:24px 16px 80px;display:flex;flex-direction:column;gap:72px}
-h1,h2,h3{font-family:"Space Grotesk",sans-serif;letter-spacing:-.03em;margin:0;line-height:1.05}
-h2{font-size:clamp(28px,5vw,44px)}
-h3{font-size:20px;letter-spacing:-.01em}
-p{margin:0}
-.muted{color:var(--tx2)}
-.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--a);font-weight:600;margin-bottom:12px}
-.sec{display:flex;flex-direction:column;gap:24px}
-.sec > p{max-width:640px}
-.grid{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
-@media(min-width:760px){.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.box{background:var(--s1);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:14px}
-.stage{border-radius:24px;display:grid;place-items:center;padding:48px 24px;min-height:240px}
-.dark{background:#0A0A0A;border:1px solid var(--line)}
-.lime{background:var(--a);color:#0A0A0A}
-.light{background:#F5F5F2;color:#0A0A0A}
-.stage img{max-width:100%;height:auto}
-.hero{min-height:72vh;display:grid;place-items:center;text-align:center;gap:28px;padding:40px 0}
-.hero img{width:min(560px,86vw);height:auto}
-.tag{font-family:"Space Grotesk",sans-serif;font-size:clamp(22px,4vw,34px);font-weight:500;letter-spacing:-.02em}
-.tag b{color:var(--a);font-weight:700}
-.pulse{width:100%;height:56px;display:block}
-.pulse path{fill:none;stroke:var(--a);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1600;animation:beat 2.6s cubic-bezier(.4,0,.2,1) infinite}
-@keyframes beat{0%{stroke-dashoffset:1600}55%{stroke-dashoffset:0}100%{stroke-dashoffset:-1600}}
-.sw{border-radius:20px;overflow:hidden;border:1px solid var(--line)}
-.sw .c{height:120px}
-.sw .t{padding:14px 16px;background:var(--s1)}
-.sw .t b{display:block;font-family:"Space Grotesk",sans-serif}
-.sw code{font-size:13px;color:var(--tx2)}
-.prop{display:flex;height:22px;border-radius:999px;overflow:hidden}
-.type1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(48px,9vw,96px);letter-spacing:-.05em;line-height:1}
-.type2{font-family:Inter,sans-serif;font-size:22px}
-.icons{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap}
-.phone{width:240px;border-radius:36px;background:linear-gradient(#1d2a12,#0b0b0c);padding:28px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;border:1px solid var(--line)}
-.phone span{aspect-ratio:1;border-radius:14px;background:rgba(255,255,255,.08)}
-.phone img{width:100%;border-radius:14px}
-.no{position:relative}
-.no .stage{min-height:180px}
-.no p{font-size:14px}
-.no .x{position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:#FF5A3D;display:grid;place-items:center;color:#fff;font-weight:700;font-size:15px}
-.btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font-weight:700;background:var(--a);color:#0A0A0A;text-decoration:none}
-.btn.o{background:transparent;color:var(--tx);border:1px solid rgba(255,255,255,.2);font-weight:600}
-.post{aspect-ratio:1;border-radius:24px;background:#0A0A0A;padding:28px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--line)}
-.post h3{font-size:clamp(26px,3.4vw,36px);letter-spacing:-.04em}
-.dl{display:flex;flex-wrap:wrap;gap:10px}
-.dl a{color:var(--tx);border:1px solid var(--line);border-radius:999px;padding:10px 16px;text-decoration:none;font-size:14px}
-.dl a:hover{border-color:var(--a)}
-.clear{position:relative;display:inline-block;padding:44px;border:1.5px dashed rgba(212,255,58,.5);border-radius:12px}
-@media (prefers-reduced-motion:reduce){.pulse path{animation:none;stroke-dasharray:none}}
+.bm { max-width: 1120px; margin: 0 auto; padding: 0 16px 80px; }
+.bm-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: var(--rail); color: #F2F2EE; position: sticky; top: 0; z-index: 5; }
+.bm-nav a.btn { color: #F2F2EE; border-color: #3A4048; }
+.bm-nav img { width: 30px; height: 30px; display: block; outline: 1px solid #2A2F36; }
+.bm-nav .brand { display: flex; align-items: center; gap: 10px; }
+.bm h1 { font-size: clamp(44px, 9vw, 88px); margin-top: 48px; }
+.bm .lead { font-size: 19px; color: var(--tx2); max-width: 56ch; margin-top: 14px; }
+.bm section { padding-top: 64px; display: flex; flex-direction: column; gap: 20px; }
+.bm h2 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 700; padding-bottom: 12px; border-bottom: 1px solid var(--line2); }
+.bm h3 { font-family: var(--fd); font-weight: 600; font-size: 22px; }
+.bm p { max-width: 64ch; }
+.bm .muted { color: var(--tx2); }
+.marks { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) { .marks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mk { border: 1px solid var(--line); border-radius: var(--r); padding: 28px; display: grid; place-items: center; min-height: 220px; }
+.mk.dk { background: #101215; } .mk.lt { background: #FFFFFF; }
+.mk img { max-width: 100%; height: auto; }
+.mk-cap { display: flex; justify-content: space-between; gap: 8px; font-family: var(--fm); font-size: 12.5px; color: var(--tx3); margin-top: 8px; }
+.mk-cap a { color: var(--tx); text-decoration: underline; text-underline-offset: 3px; }
+.cores { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--line2); }
+@media (min-width: 760px) { .cores { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cor { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 760px) { .cor:nth-child(odd) { padding-right: 24px; border-right: 1px solid var(--line); } .cor:nth-child(even) { padding-left: 24px; } }
+.cor i { width: 64px; height: 64px; border-radius: var(--r); border: 1px solid var(--line2); display: block; }
+.cor b { display: block; font-weight: 600; }
+.cor code { font-family: var(--fm); font-size: 12.5px; color: var(--tx3); }
+.cor span { display: block; font-size: 14.5px; color: var(--tx2); }
+.tipos { display: grid; gap: 0; border-top: 1px solid var(--line2); }
+.tipo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+@media (min-width: 760px) { .tipo { grid-template-columns: 240px minmax(0, 1fr); align-items: baseline; } }
+.tipo .lbl { color: var(--tx3); }
+.regras { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 760px) { .regras { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.regras ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line2); }
+.regras li { display: flex; gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.regras li .mark { transform: translateY(-2px); }
 </style>
 </head>
 <body>
-<main>
+<header class="bm-nav">
+  <span class="brand"><img src="pump-marca-escuro.svg" alt=""><span class="wordmark">Pump</span></span>
+  <a class="btn sm" href="../#/">Voltar ao app</a>
+</header>
+<main class="bm">
+  <h1>Manual da marca</h1>
+  <p class="lead">O Pump trata o dia do personal como um painel de partidas: tudo em ordem de horário, e o que muda acende e fica aceso até alguém ver. A marca, as cores e as letras vêm desse painel e do cartão de embarque.</p>
 
-<section class="hero">
-  <img src="pump-assinatura-escuro.svg" width="560" height="124" alt="Pump">
-  <p class="tag">Treino em <b>ritmo</b>.</p>
-  <svg class="pulse" viewBox="0 0 1100 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28H430l18-22 26 44 26-44 18 22H1100"/></svg>
-  <p class="muted" style="max-width:560px">Manual da marca · versão 1 · outubro de 2026</p>
-</section>
+  <section aria-labelledby="t-marca">
+    <h2 id="t-marca">Marca</h2>
+    <p class="muted">O código PMP, desenhado em traço reto como as letras de um painel, com o quadrado laranja de "mudou" no canto. O quadrado é a única cor da marca e repete a função dela no app.</p>
+    <div class="marks">
+      <figure style="margin:0"><div class="mk dk"><img src="pump-marca-escuro.svg" width="180" height="180" alt="Marca PMP sobre fundo escuro"></div><figcaption class="mk-cap"><span>Símbolo · fundo escuro</span><a href="pump-marca-escuro.svg" download>SVG</a></figcaption></figure>
+      <figure style="margin:0"><div class="mk lt"><img src="pump-marca-claro.svg" width="180" height="180" alt="Marca PMP sobre fundo claro"></div><figcaption class="mk-cap"><span>Símbolo · fundo claro</span><a href="pump-marca-claro.svg" download>SVG</a></figcaption></figure>
+      <figure style="margin:0"><div class="mk dk"><img src="pump-horizontal-escuro.svg" width="420" height="131" alt="Marca PMP com a palavra Pump, fundo escuro"></div><figcaption class="mk-cap"><span>Horizontal · fundo escuro</span><a href="pump-horizontal-escuro.svg" download>SVG</a></figcaption></figure>
+      <figure style="margin:0"><div class="mk lt"><img src="pump-horizontal-claro.svg" width="420" height="131" alt="Marca PMP com a palavra Pump, fundo claro"></div><figcaption class="mk-cap"><span>Horizontal · fundo claro</span><a href="pump-horizontal-claro.svg" download>SVG</a></figcaption></figure>
+    </div>
+    <p class="muted">Ícone do app instalado: <code class="mono">icon.svg</code> (o mesmo símbolo escuro). Espaço livre em volta da marca: no mínimo a largura do quadrado laranja. Tamanho mínimo: 24 px.</p>
+  </section>
 
-<section class="sec">
-  <div><p class="eyebrow">01 · Conceito</p><h2>Força em movimento</h2></div>
-  <p class="muted">Pump é o "pump" do treino: o músculo cheio, o coração acelerado, a constância. O logotipo tem o peso das grandes marcas de academia, com <b style="color:var(--tx)">maiúsculas pesadas e inclinadas para a frente</b>, e uma assinatura só nossa: o <b style="color:var(--tx)">vazio do primeiro P aceso em verde</b>, a luz de quem está treinando.</p>
-  <div class="grid g3">
-    <div class="box"><h3>Força</h3><p class="muted">Letras grossas e cortes retos: a marca aguenta peso, como o aluno.</p></div>
-    <div class="box"><h3>Movimento</h3><p class="muted">Inclinação de 12° para a frente. Nada parado: o treino está sempre avançando.</p></div>
-    <div class="box"><h3>Energia</h3><p class="muted">O verde-limão aparece pouco e no lugar certo: a luz do P, a ação, o pulso.</p></div>
-  </div>
-</section>
+  <section aria-labelledby="t-cores">
+    <h2 id="t-cores">Cores e a função de cada uma</h2>
+    <p class="muted">Duas cores de sinal, cada uma com um trabalho só. Todo o resto é preto, branco e cinza do painel.</p>
+    <div class="cores">
+      <div class="cor"><i style="background:#101215"></i><div><b>Painel</b><code>#101215</code><span>Fundo do tema escuro.</span></div></div>
+      <div class="cor"><i style="background:#0A0B0D"></i><div><b>Trilho</b><code>#0A0B0D</code><span>Menu lateral, barra de abas e barra do topo, nos dois temas.</span></div></div>
+      <div class="cor"><i style="background:#F2F2EE"></i><div><b>Tinta do painel</b><code>#F2F2EE</code><span>Texto no escuro e botão principal.</span></div></div>
+      <div class="cor"><i style="background:#FFFFFF"></i><div><b>Cartão de embarque</b><code>#FFFFFF</code><span>Fundo do tema claro e dos cartões tipo passe (treino do dia, convite).</span></div></div>
+      <div class="cor"><i style="background:#FF6A13"></i><div><b>Laranja de mudança</b><code>#FF6A13 · claro #D9480F</code><span>Só para o que mudou ou precisa do personal: remarcou, cancelou, atrasou, sumiu.</span></div></div>
+      <div class="cor"><i style="background:#3DDC84"></i><div><b>Verde de agora</b><code>#3DDC84 · claro #0E8A4A</code><span>Só para o que está acontecendo agora: a próxima aula, a série atual, o registro mais recente.</span></div></div>
+    </div>
+  </section>
 
-<section class="sec">
-  <div><p class="eyebrow">02 · Logo</p><h2>Símbolo e logotipo</h2></div>
-  <div class="grid g2">
-    <div class="box"><div class="stage dark"><img src="pump-batimento.svg" width="200" height="200" alt="Símbolo Pump"></div><h3>Símbolo</h3><p class="muted">Um batimento cardíaco forte, inclinado no mesmo ângulo das letras. Usado sozinho no ícone do app, no avatar das redes e no favicon.</p></div>
-    <div class="box"><div class="stage light"><img src="pump-forca-claro.svg" width="360" height="118" alt="Logotipo pump"></div><h3>Logotipo</h3><p class="muted">"PUMP" desenhado letra a letra, sem usar fonte pronta: um desenho exclusivo, leve (menos de 1 KB) e nítido em qualquer tamanho.</p></div>
-  </div>
-  <div class="grid g2">
-    <div class="box"><div class="stage dark"><img src="pump-forca-escuro.svg" width="420" height="120" alt="Assinatura horizontal"></div><h3>Assinatura horizontal</h3><p class="muted">Principal. Cabeçalho do site e do app, apresentações, e-mails.</p></div>
-    <div class="box"><div class="stage light"><img src="pump-forca-claro.svg" width="220" height="176" alt="Assinatura vertical"></div><h3>Assinatura vertical</h3><p class="muted">Para espaços quadrados: camiseta, adesivo, tela de abertura.</p></div>
-  </div>
-  <div class="box" style="align-items:center;text-align:center">
-    <span class="clear"><img src="pump-forca-escuro.svg" width="300" height="86" alt=""></span>
-    <h3>Área de proteção</h3><p class="muted">Deixe em volta da marca um espaço livre igual à altura do pulso dentro do símbolo. Nada de texto ou imagem encostando.</p>
-  </div>
-</section>
+  <section aria-labelledby="t-letras">
+    <h2 id="t-letras">Letras</h2>
+    <div class="tipos">
+      <div class="tipo"><span class="lbl">Barlow Condensed</span><span style="font-family:var(--fd);font-weight:700;font-size:44px;line-height:1">Horários, títulos e números grandes · 09:00</span></div>
+      <div class="tipo"><span class="lbl">Barlow</span><span style="font-size:18px">Texto corrido, nomes e botões. Lê bem de longe, como as placas de sinalização.</span></div>
+      <div class="tipo"><span class="lbl">JetBrains Mono</span><span class="mono" style="font-size:15px;letter-spacing:.04em">FICHA C · TER 27 OUT · R$ 360,00</span></div>
+    </div>
+    <p class="muted">Números sempre alinhados em coluna (tabulares). Nada de letras inclinadas; a hierarquia vem de tamanho, largura e peso.</p>
+  </section>
 
-<section class="sec">
-  <div><p class="eyebrow">03 · Cores</p><h2>Preto que deixa o verde falar</h2></div>
-  <div class="grid g4">
-    <div class="sw"><div class="c" style="background:#0A0A0A"></div><div class="t"><b>Preto Pump</b><code>#0A0A0A</code><p class="muted" style="font-size:13px">Fundo principal, símbolo</p></div></div>
-    <div class="sw"><div class="c" style="background:#D4FF3A"></div><div class="t"><b>Verde Pulso</b><code>#D4FF3A</code><p class="muted" style="font-size:13px">Ação, pulso, destaque</p></div></div>
-    <div class="sw"><div class="c" style="background:#F4F4F5"></div><div class="t"><b>Branco Gelo</b><code>#F4F4F5</code><p class="muted" style="font-size:13px">Texto e letra do símbolo</p></div></div>
-    <div class="sw"><div class="c" style="background:#FF8A3D"></div><div class="t"><b>Laranja Alerta</b><code>#FF8A3D</code><p class="muted" style="font-size:13px">Só para avisos</p></div></div>
-  </div>
-  <div class="box"><h3>Proporção de uso</h3><div class="prop" aria-label="70% preto, 20% branco, 8% verde, 2% laranja"><span style="flex:70;background:#0A0A0A;border:1px solid var(--line)"></span><span style="flex:20;background:#F4F4F5"></span><span style="flex:8;background:#D4FF3A"></span><span style="flex:2;background:#FF8A3D"></span></div><p class="muted">70% preto · 20% branco · 8% verde · 2% laranja. O verde funciona porque é raro.</p></div>
-</section>
+  <section aria-labelledby="t-sit">
+    <h2 id="t-sit">Situações</h2>
+    <p class="muted">Cada situação tem uma marca fixa: contorno em repouso, cheia quando está acontecendo, riscada quando já passou.</p>
+    <table class="brd">
+      <thead><tr><th scope="col">Hora</th><th scope="col">Aluno</th><th scope="col">Situação</th></tr></thead>
+      <tbody>
+        <tr class="is-now"><td class="h">09:00</td><td class="who"><a>Juliana Costa</a><span>Emagrecer</span></td><td class="st"><b>PRÓXIMA</b></td></tr>
+        <tr><td class="h">10:30</td><td class="who"><a>Pedro Alves</a><span>Emagrecer</span></td><td class="st"><b>CONFIRMADA</b></td></tr>
+        <tr class="is-chg"><td class="h">18:00</td><td class="who"><a>Carla Bento</a><span>Ganhar massa</span></td><td class="st"><b>REMARCOU · ERA 16:00</b></td></tr>
+        <tr class="is-chg is-gone"><td class="h">19:00</td><td class="who"><a>Lucas Prado</a><span>Ganhar massa</span></td><td class="st"><b>CANCELOU</b></td></tr>
+        <tr class="is-done"><td class="h">07:00</td><td class="who"><a>Marina Souza</a><span>Definição</span></td><td class="st"><b>FEITA</b></td></tr>
+      </tbody>
+    </table>
+    <p class="muted">Nomes do exemplo de demonstração.</p>
+  </section>
 
-<section class="sec">
-  <div><p class="eyebrow">04 · Tipografia</p><h2>Duas fontes, papéis claros</h2></div>
-  <div class="grid g2">
-    <div class="box"><span class="type1">Aa 72,4</span><h3>Space Grotesk</h3><p class="muted">Títulos e números (carga, peso, horários). Negrito, letras juntas.</p></div>
-    <div class="box"><span class="type2">Seu treino de hoje está pronto. Bora?</span><h3>Inter</h3><p class="muted">Textos, botões e formulários. Leitura confortável no celular.</p></div>
-  </div>
-</section>
-
-<section class="sec">
-  <div><p class="eyebrow">05 · Elemento gráfico</p><h2>O pulso</h2></div>
-  <p class="muted">O batimento do símbolo vira linha de marca: divisória, barra de carregamento, assinatura de posts. Sempre em verde, sempre na horizontal, com um único pico.</p>
-  <div class="box" style="padding:40px 28px"><svg class="pulse" viewBox="0 0 1100 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28H430l18-22 26 44 26-44 18 22H1100"/></svg></div>
-</section>
-
-<section class="sec">
-  <div><p class="eyebrow">06 · Ícone do app</p><h2>Reconhecível em qualquer tamanho</h2></div>
-  <div class="grid g2">
-    <div class="box"><div class="icons"><img src="pump-batimento.svg" width="120" height="120" alt="Ícone 120 px"><img src="pump-batimento.svg" width="64" height="64" alt="Ícone 64 px"><img src="pump-batimento.svg" width="40" height="40" alt="Ícone 40 px"><img src="pump-batimento.svg" width="24" height="24" alt="Ícone 24 px"><img src="pump-batimento.svg" width="16" height="16" alt="Ícone 16 px"></div><p class="muted">Do ícone da loja ao favicon da aba do navegador.</p></div>
-    <div class="box" style="align-items:center"><div class="phone" aria-label="Ícone na tela do celular"><span></span><span></span><span></span><img src="pump-batimento.svg" alt=""><span></span><span></span><span></span><span></span></div></div>
-  </div>
-</section>
-
-<section class="sec">
-  <div><p class="eyebrow">07 · Aplicações</p><h2>A marca no dia a dia</h2></div>
-  <div class="grid g3">
-    <div class="box" style="gap:18px"><h3>Botões</h3><a class="btn" href="#">Começar treino</a><a class="btn o" href="#">Ver exercícios</a></div>
-    <div class="post"><img src="pump-batimento.svg" width="48" height="48" alt=""><div><h3>Treino em <span style="color:var(--a)">ritmo</span>.</h3><svg class="pulse" viewBox="0 0 1100 56" preserveAspectRatio="none" aria-hidden="true" style="height:32px;margin-top:12px"><path d="M0 28H430l18-22 26 44 26-44 18 22H1100"/></svg></div><p class="muted" style="font-size:13px">Post para Instagram</p></div>
-    <div class="post" style="background:var(--a);color:#0A0A0A"><img src="pump-forca-claro.svg" width="150" height="43" alt=""><h3>−5,6 kg em 6 meses. Constância é isso.</h3><p style="font-size:13px;opacity:.7">Post de resultado (com autorização do aluno)</p></div>
-  </div>
-</section>
-
-<section class="sec">
-  <div><p class="eyebrow">08 · Usos incorretos</p><h2>O que não fazer</h2></div>
-  <div class="grid g4">
-    <div class="box no"><span class="x">✕</span><div class="stage dark"><img src="pump-forca-escuro.svg" width="200" height="57" alt="" style="transform:scaleX(1.5)"></div><p class="muted">Esticar ou achatar</p></div>
-    <div class="box no"><span class="x">✕</span><div class="stage dark"><img src="pump-forca-escuro.svg" width="200" height="57" alt="" style="filter:hue-rotate(160deg) saturate(3)"></div><p class="muted">Trocar as cores</p></div>
-    <div class="box no"><span class="x">✕</span><div class="stage" style="background:#7d7d6a"><img src="pump-forca-claro.svg" width="200" height="57" alt=""></div><p class="muted">Usar sem contraste</p></div>
-    <div class="box no"><span class="x">✕</span><div class="stage dark"><img src="pump-forca-escuro.svg" width="200" height="57" alt="" style="transform:rotate(-14deg)"></div><p class="muted">Girar ou inclinar</p></div>
-  </div>
-</section>
-
-<section class="sec">
-  <div><p class="eyebrow">09 · Arquivos</p><h2>Baixar a marca</h2></div>
-  <div class="dl">
-    <a href="pump-batimento.svg" download>Símbolo (ícone)</a>
-    <a href="pump-forca-claro.svg" download>Logotipo</a>
-    <a href="pump-forca-escuro.svg" download>Horizontal · fundo escuro</a>
-    <a href="pump-forca-claro.svg" download>Horizontal · fundo claro</a>
-    <a href="pump-forca-escuro.svg" download>Vertical · fundo escuro</a>
-    <a href="pump-forca-claro.svg" download>Vertical · fundo claro</a>
-  </div>
-  <p class="muted" style="font-size:14px">Todos em vetor (SVG): nítidos em qualquer tamanho. Para impressão ou redes que pedem PNG, é só pedir a exportação.</p>
-</section>
-
+  <section aria-labelledby="t-regras">
+    <h2 id="t-regras">Regras</h2>
+    <div class="regras">
+      <div><h3>Faça</h3><ul>
+        <li><span class="mark" style="color:var(--live)"></span>Ordene por horário: o painel se lê de cima para baixo.</li>
+        <li><span class="mark" style="color:var(--live)"></span>Use laranja só para mudança e verde só para agora.</li>
+        <li><span class="mark" style="color:var(--live)"></span>Cantos retos, linhas finas e tabelas no lugar de cartões soltos.</li>
+        <li><span class="mark" style="color:var(--live)"></span>Deixe a mudança acesa até o personal tocar em Visto.</li>
+      </ul></div>
+      <div><h3>Não faça</h3><ul>
+        <li><span class="mark" style="color:var(--chg)"></span>Fantasia de aeroporto: avião, portão, voo, embarque escrito.</li>
+        <li><span class="mark" style="color:var(--chg)"></span>Botões em pílula, brilho, vidro, degradê ou sombra dura.</li>
+        <li><span class="mark" style="color:var(--chg)"></span>Faixa colorida grossa na lateral de cartões e alertas.</li>
+        <li><span class="mark" style="color:var(--chg)"></span>Uma terceira cor de destaque, ou laranja e verde como enfeite.</li>
+      </ul></div>
+    </div>
+  </section>
 </main>
 </body>
 </html>

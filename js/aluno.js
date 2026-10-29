@@ -56,7 +56,7 @@ function inicioV() {
   const dif = med.length > 1 ? med.at(-1).peso - med[0].peso : 0;
   const f = ficha(s, 'B');
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Terça, 27 de outubro</p><h1>Olá, ${C.alunoConta()?.nome.split(' ')[0] || 'Juliana'}</h1></div><span class="pill warn" style="gap:6px;font-size:13px;padding:6px 12px">${ic('fogo', 16)}${s.sequencia} dias seguidos</span></header>
+    <header class="ph"><div><h1>Olá, ${C.alunoConta()?.nome.split(' ')[0] || 'Juliana'}</h1><p class="meta">Terça, 27 de outubro</p></div><span class="pill" style="gap:6px;font-size:12.5px;padding:6px 10px">${ic('fogo', 15)}${s.sequencia} dias seguidos</span></header>
     ${C.alunoConta() ? html`<div class="card row" style="padding:12px 16px"><span class="grow"><span class="t">Conectado como ${C.alunoConta().nome}${C.alunoConta().treinador ? ` · aluno de ${C.alunoConta().treinador}` : ''}</span><span class="s">Treinos e medidas abaixo ainda são de exemplo; os seus chegam quando o personal montar sua ficha.</span></span><button type="button" class="btn sm" data-act="sairConta">Sair</button></div>` : ''}
     ${me.treinoNovo ? html`<a class="card row" href="#/a/treino" style="padding:12px 16px;border-color:var(--a-line)"><span class="ping" style="color:var(--a-ink)"></span><span class="grow"><span class="t">Seu personal atualizou o Treino ${me.treinoNovo}</span><span class="s">Toque para ver o que mudou</span></span>${ic('seta', 18)}</a>` : ''}
     <section class="hero" aria-label="Treino de hoje">
@@ -81,7 +81,7 @@ function treinoV() {
   const k = ui.aFicha;
   const f = ficha(s, k);
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Montado pelo seu personal</p><h1>Meu treino</h1></div><button type="button" class="btn" data-act="pedirAjuste">Pedir ajuste</button></header>
+    <header class="ph"><div><h1>Meu treino</h1><p class="meta">Montado pelo seu personal</p></div><button type="button" class="btn" data-act="pedirAjuste">Pedir ajuste</button></header>
     <div class="seg g3 grid" role="group" aria-label="Escolher treino">${['A', 'B', 'C'].map(x => html`<button type="button" class="segbtn" aria-pressed="${x === k}" data-act="aFicha" data-v="${x}"><strong class="num" style="font-size:18px">Treino ${x}</strong><span class="muted small">${DIA_FICHA[x]}</span></button>`)}</div>
     <div class="grid lg-21">
       <section class="card" style="padding-block:6px" aria-label="Exercícios">
@@ -122,26 +122,45 @@ function treinandoV() {
     return html`<div class="serie ${r ? 'feita' : atual ? 'atual' : ''}"><span>${i + 1}</span><span>${cargaTxt(r ? r.carga : atual ? t.carga : e.carga)}</span><span>${r ? r.reps : atual ? t.reps : e.reps}${e.L.seg ? ' s' : ''}</span><span class="ck ${r ? 'on' : ''}" aria-label="${r ? 'Série feita' : 'Série pendente'}">${r ? ic('check', 16) : ''}</span></div>`;
   });
   const frac = t.resto > 0 ? (t.resto / t.total).toFixed(3) : 0;
-  return html`<div class="page ${ui.anim ? 'enter' : ''}" style="max-width:760px">
-    <header style="display:flex;align-items:center;gap:12px">
-      <button type="button" class="icobtn" aria-label="Sair do treino" data-act="sairTreino">${ic('voltar', 18)}</button>
-      <div style="flex:1"><span class="lbl">Treino ${t.l} · ${NOME_FICHA[t.l]}</span><div class="num" style="font-size:17px">Exercício ${t.ex + 1} de ${f.length}</div></div>
-    </header>
-    <div class="prog" style="grid-template-columns:repeat(${f.length},minmax(0,1fr))" role="progressbar" aria-label="Progresso do treino" aria-valuemin="0" aria-valuemax="${f.length}" aria-valuenow="${t.ex}">${f.map((x, i) => html`<i><b style="transform:scaleX(${i < t.ex ? 1 : i === t.ex ? Math.min(1, t.serie / e.series).toFixed(3) : 0})"></b></i>`)}</div>
-    <button type="button" class="video" data-act="video" data-n="${e.L.nome}" aria-label="Ver vídeo de ${e.L.nome}"><span class="play">${ic('play', 22)}</span><span class="tag">Vídeo do seu personal</span></button>
-    <div><h1 style="font-size:clamp(24px,5vw,32px)">${e.L.nome}</h1><p class="muted small" style="margin-top:4px">Dica: ${e.L.dica}</p></div>
-    <div class="page" style="gap:6px"><div class="serie" style="border:0;padding-block:0" aria-hidden="true"><span class="lbl">Série</span><span class="lbl">Carga</span><span class="lbl">${e.L.seg ? 'Tempo' : 'Reps'}</span><span></span></div>${series}</div>
-    ${!feito ? html`<div class="grid g2" style="gap:8px">
-        <div><div class="stp-lbl">Carga desta série</div><div class="stp"><button type="button" aria-label="Menos carga" data-act="trAj" data-f="carga" data-dt="-1">${ic('menos', 16)}</button><output>${cargaTxt(t.carga)}</output><button type="button" aria-label="Mais carga" data-act="trAj" data-f="carga" data-dt="1">${ic('mais', 16)}</button></div></div>
-        <div><div class="stp-lbl">${e.L.seg ? 'Segundos' : 'Repetições'}</div><div class="stp"><button type="button" aria-label="Menos repetições" data-act="trAj" data-f="reps" data-dt="-1">${ic('menos', 16)}</button><output>${t.reps}</output><button type="button" aria-label="Mais repetições" data-act="trAj" data-f="reps" data-dt="1">${ic('mais', 16)}</button></div></div>
+  const novo = ui.feedEx !== t.ex;
+  ui.feedEx = t.ex;
+  // Treino em tela cheia: um exercício por vez ocupa a tela; o próximo está a um deslize.
+  return html`<div class="feed" role="region" aria-label="Treino ${t.l} em andamento" data-swipe="proximoEx" data-pode="${feito ? 1 : 0}">
+    <div class="feed-top">
+      <button type="button" class="feed-ico" aria-label="Sair do treino" data-act="sairTreino">${ic('x', 20)}</button>
+      <span class="feed-title">Treino ${t.l} · ${NOME_FICHA[t.l]}</span>
+      <span class="feed-count mono">${t.ex + 1}/${f.length}</span>
+    </div>
+    <div class="prog feed-prog" style="grid-template-columns:repeat(${f.length},minmax(0,1fr))" role="progressbar" aria-label="Progresso do treino" aria-valuemin="0" aria-valuemax="${f.length}" aria-valuenow="${t.ex}">${f.map((x, i) => html`<i><b style="transform:scaleX(${i < t.ex ? 1 : i === t.ex ? Math.min(1, t.serie / e.series).toFixed(3) : 0})"></b></i>`)}</div>
+
+    <div class="feed-item ${novo ? 'snap' : ''}">
+      <div class="feed-media">
+        <span class="feed-n num" aria-hidden="true">${String(t.ex + 1).padStart(2, '0')}</span>
+        <h1>${e.L.nome}</h1>
+        <p class="feed-meta">${e.L.grupo} · ${e.series} séries de ${e.reps}${e.L.seg ? ' s' : ''}${e.carga ? ' · ' + e.carga + ' kg na ficha' : ''}</p>
+        ${ui.dica ? html`<p class="feed-dica enter"><strong>Dica do personal:</strong> ${e.L.dica}</p>` : ''}
       </div>
-      <div style="display:flex;gap:8px">
-        <button type="button" class="rest ${t.resto > 0 ? '' : 'pronto'}" data-act="pularDescanso" aria-label="Pular descanso"><span class="lbl" style="font-size:10px">${t.resto > 0 ? 'Descanso' : 'Descansou'}</span><span class="num tnum" id="resto-txt">${t.resto > 0 ? relogio(t.resto) : 'Pronto'}</span><span class="bar"><i id="resto-bar" style="transform:scaleX(${frac})"></i></span></button>
-        <button type="button" class="btn p lg" style="flex:1" data-act="concluirSerie">Concluir série ${t.serie + 1}</button>
-      </div>`
-    : html`<div class="page enter" style="gap:8px"><div class="ok-box"><span class="ck on">${ic('check', 16)}</span>${e.L.nome} concluído</div>
-      <button type="button" class="btn p lg block" data-act="proximoEx">${ultimo ? 'Finalizar treino' : 'Próximo: ' + prox.L.nome}</button></div>`}
-    <p class="small muted" style="text-align:center">${prox ? 'A seguir: ' + prox.L.nome : 'Último exercício do treino'}</p>
+
+      <div class="feed-rail">
+        <button type="button" data-act="video" data-n="${e.L.nome}"><i>${ic('play', 20)}</i>Vídeo</button>
+        <button type="button" data-act="dica" aria-pressed="${ui.dica ? 'true' : 'false'}"><i>${ic('chat', 20)}</i>Dica</button>
+        <button type="button" data-act="pedirAjuste"><i>${ic('enviar', 20)}</i>Ajuste</button>
+      </div>
+
+      <div class="feed-cap">
+        <div class="feed-sets" aria-label="Séries">${series}</div>
+        ${!feito ? html`<div class="grid g2" style="gap:8px">
+            <div><div class="stp-lbl">Carga</div><div class="stp"><button type="button" aria-label="Menos carga" data-act="trAj" data-f="carga" data-dt="-1">${ic('menos', 18)}</button><output>${cargaTxt(t.carga)}</output><button type="button" aria-label="Mais carga" data-act="trAj" data-f="carga" data-dt="1">${ic('mais', 18)}</button></div></div>
+            <div><div class="stp-lbl">${e.L.seg ? 'Segundos' : 'Repetições'}</div><div class="stp"><button type="button" aria-label="Menos repetições" data-act="trAj" data-f="reps" data-dt="-1">${ic('menos', 18)}</button><output>${t.reps}</output><button type="button" aria-label="Mais repetições" data-act="trAj" data-f="reps" data-dt="1">${ic('mais', 18)}</button></div></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button type="button" class="rest ${t.resto > 0 ? '' : 'pronto'}" data-act="pularDescanso" aria-label="Pular descanso"><span class="lbl" style="font-size:10.5px">${t.resto > 0 ? 'Descanso' : 'Descansou'}</span><span class="num tnum" id="resto-txt">${t.resto > 0 ? relogio(t.resto) : 'Pronto'}</span><span class="bar"><i id="resto-bar" style="transform:scaleX(${frac})"></i></span></button>
+            <button type="button" class="btn p lg" style="flex:1" data-act="concluirSerie">Concluir série ${t.serie + 1}</button>
+          </div>`
+        : html`<button type="button" class="btn p lg block" data-act="proximoEx">${ultimo ? 'Finalizar treino' : 'Próximo exercício'}${ic('seta', 18)}</button>`}
+        <p class="feed-next">${prox ? html`A seguir: <strong>${prox.L.nome}</strong>${feito ? ' · deslize para cima' : ''}` : 'Último exercício do treino'}</p>
+      </div>
+    </div>
   </div>`;
 }
 
@@ -176,7 +195,7 @@ function evolucaoV() {
   const atual = pts.at(-1)?.[ui.metrica];
   const dif = pts.length > 1 ? atual - pts[0][ui.metrica] : 0;
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Última avaliação: ${med.length ? rotulo(med.at(-1).d) : '—'}</p><h1>Evolução</h1></div><button type="button" class="btn" data-act="foto">Foto de progresso</button></header>
+    <header class="ph"><div><h1>Evolução</h1><p class="meta">Última avaliação: ${med.length ? rotulo(med.at(-1).d) : '—'}</p></div><button type="button" class="btn" data-act="foto">Foto de progresso</button></header>
     <div class="chips" role="group" aria-label="Medida">${Object.entries(METRICAS).map(([k, [n]]) => html`<button type="button" class="chip" aria-pressed="${ui.metrica === k}" data-act="metrica" data-v="${k}">${n}</button>`)}${[3, 6].map(p => html`<button type="button" class="chip" aria-pressed="${ui.periodo === p}" data-act="periodo" data-v="${p}">${p} medições</button>`)}</div>
     <div class="grid lg-21">
       <section class="card">
@@ -202,7 +221,7 @@ function agendaV() {
   const livres = [];
   for (let d = HOJE + 1; d < DIAS.length; d++) for (const h of HORAS) if (!s.agenda[d]?.[h]) livres.push({ d, h });
   return html`<div class="page ${ui.anim ? 'enter' : ''}" style="max-width:820px">
-    <header class="ph"><div><p class="eyebrow">Lembrete no WhatsApp 1h antes</p><h1>Minhas aulas</h1></div><button type="button" class="btn p" data-act="remarcar" data-k="nova">${ic('mais', 18)}Agendar aula</button></header>
+    <header class="ph"><div><h1>Minhas aulas</h1><p class="meta">Lembrete no WhatsApp 1h antes</p></div><button type="button" class="btn p" data-act="remarcar" data-k="nova">${ic('mais', 18)}Agendar aula</button></header>
     ${aulas.length ? html`<div class="page ${ui.anim ? 'stagger' : ''}" style="gap:10px">${aulas.map(a => html`<article class="card" style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
       <div style="display:flex;align-items:center;gap:14px"><div style="text-align:center;width:48px"><span class="lbl">${DIAS[a.d].n}</span><div class="num" style="font-size:24px">${DIAS[a.d].d}</div></div>
         <div style="flex:1"><strong>${a.h} · com o personal</strong><div class="small muted">${a.feita ? 'Presença registrada' : a.d === HOJE ? 'Hoje · confirmada' : 'Confirmada'}</div></div>${a.feita ? html`<span class="pill ok">Feita</span>` : ''}</div>
@@ -224,7 +243,7 @@ function pagV() {
   const paga = me.nov === 'paga';
   return html`<div class="page ${ui.anim ? 'enter' : ''}" style="max-width:720px">
     <a class="btn sm" href="#/a/inicio" style="align-self:flex-start">${ic('voltar', 16)}Início</a>
-    <header class="ph"><div><p class="eyebrow">Plano mensal</p><h1>Pagamento</h1></div></header>
+    <header class="ph"><div><h1>Pagamento</h1><p class="meta">Plano mensal</p></div></header>
     <section class="card page" style="gap:14px">
       <div class="card-h" style="margin:0;align-items:flex-start"><div><span class="lbl">Mensalidade de novembro</span><div class="num" style="font-size:32px;margin-top:4px">R$ [VALOR]</div><span class="muted small">${paga ? 'Paga · obrigado!' : 'Vence em 10 de novembro'}</span></div>${paga ? html`<span class="pill ok">${ic('check', 14)} Paga</span>` : ''}</div>
       ${paga ? '' : ui.pixAberto ? html`<div class="enter page" style="gap:12px">
@@ -286,6 +305,7 @@ export const acts = {
   aFicha: d => { ui.aFicha = d.v; ui.aberto = null; redraw(); },
   abrirEx: d => { ui.aberto = ui.aberto === +d.i ? null : +d.i; redraw(); },
   video: d => toast(`Vídeo de ${d.n}`),
+  dica: () => { ui.dica = !ui.dica; redraw(); },
   pedirAjuste: () => { ui.texto = `Quero ajustar um exercício do Treino ${ui.aFicha}: `; location.hash = '#/a/chat'; },
   comecar: d => {
     const e = ficha(get(), d.l)[0];
@@ -315,7 +335,7 @@ export const acts = {
     t.ex += 1; t.serie = 0; t.resto = 0; t.carga = f[t.ex].carga; t.reps = f[t.ex].reps;
     redraw();
   },
-  sairTreino: () => { clearInterval(timer); ui.tr = null; redraw(); },
+  sairTreino: () => { clearInterval(timer); ui.tr = null; ui.feedEx = null; ui.dica = false; redraw(); },
   nota: d => { ui.nota = d.v; redraw(); },
   enviarResumo: () => {
     const t = ui.tr;
@@ -343,14 +363,22 @@ export const acts = {
   pegarHorario: d => {
     const alvo = ui.remarcar;
     update(n => {
-      if (alvo && alvo !== 'nova') { const [od, oh] = alvo.split('|'); delete n.agenda[od][oh]; }
+      const mud = n.mudou ||= {};
+      let era = null;
+      if (alvo && alvo !== 'nova') {
+        const [od, oh] = alvo.split('|');
+        delete n.agenda[od][oh];
+        delete mud[`${od}-${oh}`];
+        era = od === d.dia ? oh : `${DIAS[od].n} ${oh}`;
+      }
       (n.agenda[d.dia] ||= {})[d.hora] = EU;
+      mud[`${d.dia}-${d.hora}`] = { tipo: era ? 'remarcou' : 'marcou', id: EU, era, t: Date.now() };
     }, { de: 'a', aluno: EU, txt: `Juliana ${alvo === 'nova' ? 'marcou aula' : 'remarcou para'} ${DIAS[d.dia].n} às ${d.hora}` });
     ui.remarcar = null;
     toast(`Aula ${alvo === 'nova' ? 'marcada' : 'remarcada'} para ${DIAS[d.dia].n} às ${d.hora}`);
   },
   cancelarMinha: d => {
-    update(n => { delete n.agenda[d.dia][d.hora]; }, { de: 'a', aluno: EU, txt: `Juliana cancelou a aula de ${DIAS[d.dia].n} às ${d.hora}` });
+    update(n => { delete n.agenda[d.dia][d.hora]; (n.mudou ||= {})[`${d.dia}-${d.hora}`] = { tipo: 'cancelou', id: EU, t: Date.now() }; }, { de: 'a', aluno: EU, txt: `Juliana cancelou a aula de ${DIAS[d.dia].n} às ${d.hora}` });
     toast('Aula cancelada. O personal foi avisado');
   },
   abrirPix: () => { ui.pixAberto = true; redraw(); },

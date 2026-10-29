@@ -91,6 +91,8 @@ function seed() {
       5: { '09:00': 'fernanda', '10:30': 'juliana' }
     },
     presenca: { '1-07:00': true, '1-08:00': true },
+    // Mudanças feitas pelo aluno na agenda, que o personal ainda não viu (painel acende em laranja).
+    mudou: { '1-18:00': { tipo: 'remarcou', id: 'carla', era: '16:00', t: agora - 1.8e6 } },
     feitos: {},
     msgs: {
       juliana: [

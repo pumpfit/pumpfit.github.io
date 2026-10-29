@@ -1,0 +1,89 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.249Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.360Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "border-accent-on-rounded",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.487Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.575Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.676Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.818Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-29T20:50:46.979Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-29T20:50:47.089Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao, nao vai para o app; o app final evita esses padroes"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-embarque.html"
+        ],
+        "createdAt": "2026-10-29T20:56:37.699Z",
+        "reason": "Jarvis: espacamento largo so em rotulos curtos em maiusculas (PMP, HORA, SITUACAO) de um esboco de decisao que nao vai para o app"
+      }
+    ]
+  }
+}

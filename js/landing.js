@@ -1,9 +1,8 @@
-// Página de entrada do Pump: motion design guiado pelo toque e pelo mouse.
-// Tudo anima só "transform" e "opacity" (ou atributos de SVG), num único laço de quadros
-// que só roda com a página visível e desliga para quem pede menos movimento.
-import { html, raw, ic } from './ui.js';
+// Página de entrada do Pump: o painel de partidas do dia do personal, ao vivo.
+// O único movimento é o do painel: a linha que muda desliza até o novo lugar (transform)
+// e a situação vira como uma placa. Só roda com o painel visível; quem pede menos movimento vê o painel parado.
+import { html, ic } from './ui.js';
 
-const PALAVRAS = ['Seus', 'alunos,', 'treinos', 'e', 'mensalidades', 'no', 'mesmo', 'lugar.'];
 const RECURSOS = [
   ['peso', 'Treinos que o aluno segue', 'Ficha com vídeo, carga e descanso. Cada série marcada no celular chega para você na hora.'],
   ['evo', 'Evolução à vista', 'Peso, medidas e cargas viram gráfico. Você vê quem progride e quem precisa de ajuste.'],
@@ -11,87 +10,92 @@ const RECURSOS = [
   ['pix', 'Mensalidade sem constrangimento', 'Cobrança por Pix e lembrete automático para quem atrasou.']
 ];
 const PASSOS = [
-  ['1', 'Monte o treino', 'Escolha exercícios da biblioteca, ajuste séries e carga.'],
-  ['2', 'O aluno treina', 'Ele segue a ficha no celular, com vídeo e cronômetro.'],
-  ['3', 'Você acompanha', 'Resultado, peso e mensagens chegam ao vivo.']
+  ['Monte o treino', 'Escolha exercícios da biblioteca, ajuste séries e carga.'],
+  ['O aluno treina', 'Ele segue a ficha no celular, com vídeo e cronômetro.'],
+  ['Você acompanha', 'Resultado, peso, remarcações e mensagens chegam ao vivo.']
 ];
 
-export function view({ marca, ui }) {
-  const pal = PALAVRAS.map((p, i) => html`<span class="w"><span style="--i:${i}">${p}</span></span> `);
+// Alunos do exemplo e os quadros da demonstração (cada quadro é o painel inteiro, já em ordem).
+const ALUNOS = {
+  marina: ['Marina Souza', 'Definição', 'B · Inferiores'],
+  carla: ['Carla Bento', 'Ganhar massa', 'A · Superiores'],
+  juliana: ['Juliana Costa', 'Emagrecer', 'C · Core e braços'],
+  pedro: ['Pedro Alves', 'Emagrecer', 'C · Core e braços']
+};
+const QUADROS = [
+  [['juliana', '09:00', 'prox'], ['pedro', '10:30', 'conf'], ['carla', '18:00', 'chg'], ['marina', '07:00', 'feita']],
+  [['pedro', '10:30', 'prox'], ['carla', '18:00', 'chg'], ['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita']],
+  [['pedro', '10:30', 'prox'], ['carla', '18:00', 'conf'], ['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita']],
+  [['carla', '08:00', 'prox'], ['juliana', '09:00', 'conf'], ['pedro', '10:30', 'conf'], ['marina', '07:00', 'feita']]
+];
+const SIT = {
+  prox: ['is-now', 'Próxima', 'Presença'],
+  conf: ['', 'Confirmada', ''],
+  chg: ['is-chg', 'Remarcou · era 08:00', 'Visto'],
+  feita: ['is-done', 'Feita', '']
+};
+
+const linha = ([id, h, st]) => {
+  const [nome, obj, ficha] = ALUNOS[id];
+  const [cls, txt, btn] = SIT[st];
+  return html`<tr class="${cls}" data-id="${id}" data-st="${st}">
+    <td class="h">${h}</td>
+    <td class="who"><a tabindex="-1">${nome}</a><span>${obj}</span></td>
+    <td class="fx">${ficha}</td>
+    <td class="st"><b>${txt}</b>${btn ? html`<span class="btn sm">${btn}</span>` : ''}</td>
+  </tr>`;
+};
+
+export function view({ marca }) {
   return html`<div class="lp">
-    <div class="lp-progress" aria-hidden="true"><i></i></div>
     <header class="lp-nav">
       ${marca}
       <nav aria-label="Seções"><a href="#recursos" data-scroll>Recursos</a><a href="#como" data-scroll>Como funciona</a></nav>
-      <a class="btn sm mag" href="#/p/hoje"><span>Entrar</span></a>
+      <a class="btn sm" href="#/p/hoje">Entrar</a>
     </header>
 
     <section class="lp-hero">
-      <div class="lp-glow" aria-hidden="true"></div>
-      <div class="lp-copy">
-        <span class="pill ok lp-in" style="--d:0">Treino em ritmo.</span>
-        <h1 class="lp-title" aria-label="${PALAVRAS.join(' ')}"><span aria-hidden="true">${pal}</span></h1>
-        <p class="lp-sub lp-in" style="--d:6">Monte treinos, acompanhe a evolução e receba por Pix. O aluno treina pelo celular e você vê tudo na hora.</p>
-        <div class="lp-ctas lp-in" style="--d:7">
-          <a class="btn p lg mag" href="#/p/hoje"><span>Entrar como personal</span>${ic('seta', 18)}</a>
-          <a class="btn lg mag" href="#/a/inicio"><span>Entrar como aluno</span></a>
+      <div class="lp-copy lp-in">
+        <h1 class="lp-title">Seus alunos, treinos e mensalidades no mesmo lugar.</h1>
+        <p class="lp-sub">Monte treinos, acompanhe a evolução e receba por Pix. O aluno treina pelo celular, remarca pelo app, e você vê tudo na hora, em ordem de horário.</p>
+        <div class="lp-ctas">
+          <a class="btn p lg" href="#/p/hoje">Entrar como personal${ic('seta', 18)}</a>
+          <a class="btn lg" href="#/a/inicio">Entrar como aluno</a>
         </div>
-        <a class="lp-in lp-link" style="--d:8" href="#/cadastro">Sou personal e quero criar minha conta →</a>
+        <a class="lp-link" href="#/cadastro">Sou personal e quero criar minha conta${ic('seta', 16)}</a>
       </div>
 
-      <div class="lp-stage lp-in" style="--d:4" aria-hidden="true">
-        <div class="lp-phone">
-          <div class="ph-top"><span class="ph-eyebrow">Treino B · Inferiores</span><strong>Leg press 45°</strong></div>
-          <div class="ph-rows">
-            ${[1, 2, 3, 4].map(n => html`<div class="ph-row" style="--n:${n}"><span>${n}</span><span>${n > 2 ? '130' : '120'} kg</span><span>${n > 2 ? 10 : 12}</span><b class="ph-ck">${ic('check', 12)}</b></div>`)}
-          </div>
-          <div class="ph-rest"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18"/><circle class="ph-ring" cx="22" cy="22" r="18"/></svg><span><small>Descanso</small><b>0:45</b></span></div>
-          <div class="ph-btn">Concluir série</div>
-        </div>
-        <div class="lp-float f1"><span class="ping" style="color:var(--a-ink)"></span><span><b>Juliana registrou 72,1 kg</b><small>agora</small></span></div>
-        <div class="lp-float f2"><span class="ping" style="color:var(--warn)"></span><span><b>Lucas sumiu há 9 dias</b><small>Chamar no WhatsApp</small></span></div>
-      </div>
+      <figure class="lp-board lp-in" style="--d:2" aria-label="Exemplo: o painel de partidas de um dia de personal">
+        <figcaption class="lp-board-h"><strong>Partidas de hoje</strong><span class="mono">Ter 27 out · exemplo</span></figcaption>
+        <table class="brd" aria-hidden="true">
+          <thead><tr><th>Hora</th><th>Aluno</th><th class="fx">Ficha</th><th>Situação</th></tr></thead>
+          <tbody>${QUADROS[0].map(linha)}</tbody>
+        </table>
+        <p class="lp-board-f"><span class="mark" style="color:var(--chg)"></span>O que o aluno muda acende em laranja até você tocar em Visto.</p>
+      </figure>
     </section>
-
-    <section class="lp-beat" aria-label="Pulso interativo: passe o dedo ou o mouse">
-      <svg viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true"><path class="beat-shadow"/><path class="beat"/></svg>
-      <p class="lp-hint">Passe o dedo ou toque na linha</p>
-    </section>
-
-    <div class="marquee" aria-hidden="true"><div class="track">${[0, 1].map(() => html`<span>Treinos</span><i></i><span>Agenda</span><i></i><span>Evolução</span><i></i><span>Pix</span><i></i><span>Alertas</span><i></i><span>Chat</span><i></i>`)}</div></div>
 
     <section class="lp-sec" id="recursos">
-      <div class="lp-head rv"><span class="lbl">Recursos</span><h2>Tudo que o personal precisa, nada que atrapalha</h2></div>
-      <div class="lp-feats">${RECURSOS.map(([i, t, d], k) => html`<article class="lp-card spot rv" style="--d:${k}"><span class="lp-ic">${ic(i, 22)}</span><h3>${t}</h3><p>${d}</p></article>`)}</div>
-    </section>
-
-    <section class="lp-stats" aria-label="Números do exemplo">
-      <div class="rv"><b class="count" data-to="5.6" data-dec="1" data-pre="−" data-suf=" kg">0</b><span>perdidos pela aluna do exemplo em 6 meses</span></div>
-      <div class="rv" style="--d:1"><b class="count" data-to="24" data-suf=" séries">0</b><span>registradas num único treino, ao vivo</span></div>
-      <div class="rv" style="--d:2"><b class="count" data-to="1" data-pre="&lt; " data-suf=" s">0</b><span>para o personal ver o que o aluno fez</span></div>
+      <div class="lp-head rv"><h2>Tudo que o personal precisa, nada que atrapalha</h2></div>
+      <div class="lp-feats">${RECURSOS.map(([i, t, d], k) => html`<article class="lp-feat rv" style="--d:${k}"><span class="lp-ic">${ic(i, 22)}</span><h3>${t}</h3><p>${d}</p></article>`)}</div>
     </section>
 
     <section class="lp-sec" id="como">
-      <div class="lp-head rv"><span class="lbl">Como funciona</span><h2>Três passos, um ritmo</h2></div>
-      <div class="lp-steps rv">
-        <svg class="lp-steps-line" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20H420l16-14 22 28 22-28 16 14H1000"/></svg>
-        ${PASSOS.map(([n, t, d], k) => html`<div class="lp-step" style="--d:${k + 1}"><span class="lp-num">${n}</span><h3>${t}</h3><p>${d}</p></div>`)}
-      </div>
+      <div class="lp-head rv"><h2>Três passos, do treino ao resultado</h2></div>
+      <ol class="lp-pass rv">${PASSOS.map(([t, d], k) => html`<li><span class="lbl">Passo ${k + 1} de 3</span><h3>${t}</h3><p>${d}</p></li>`)}</ol>
     </section>
 
     <section class="lp-cta rv">
       <h2>Comece agora. Sem instalar nada.</h2>
       <p>Abra o personal numa aba e o aluno em outra: o que um faz, o outro vê na hora.</p>
-      <div class="lp-ctas"><a class="btn p lg mag" href="#/cadastro"><span>Criar conta de treinador</span>${ic('seta', 18)}</a><a class="btn lg mag" href="#/p/hoje"><span>Ver demonstração</span></a></div>
+      <div class="lp-ctas"><a class="btn p lg" href="#/cadastro">Criar conta de treinador${ic('seta', 18)}</a><a class="btn lg" href="#/p/hoje">Ver demonstração</a></div>
     </section>
 
     <footer class="foot"><span>Pump · demonstração local: os dados ficam só neste navegador.</span><button type="button" class="btn sm" data-act="resetar">Restaurar dados de exemplo</button></footer>
   </div>`;
 }
 
-const lerp = (a, b, t) => a + (b - a) * t;
-
-// Liga todos os movimentos. Devolve uma função que desliga tudo (chamada antes de redesenhar).
+// Liga os movimentos. Devolve uma função que desliga tudo (chamada antes de redesenhar).
 export function mount(root) {
   const lp = root.querySelector('.lp');
   if (!lp) return () => {};
@@ -102,147 +106,55 @@ export function mount(root) {
   requestAnimationFrame(() => lp.classList.add('ready'));
   setTimeout(() => lp.classList.add('ready'), 60);
 
-  // Revelar ao rolar + contadores.
-  const contar = el => {
-    const to = parseFloat(el.dataset.to), dec = +(el.dataset.dec || 0), pre = el.dataset.pre || '', suf = el.dataset.suf || '';
-    const fmt = v => pre + v.toLocaleString('pt-BR', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suf;
-    if (calmo) { el.textContent = fmt(to); return; }
-    const t0 = performance.now();
-    const passo = t => {
-      const k = Math.min(1, (t - t0) / 1300), e = 1 - Math.pow(1 - k, 4);
-      el.textContent = fmt(to * e);
-      if (k < 1) requestAnimationFrame(passo);
-    };
-    requestAnimationFrame(passo);
-  };
+  // Revelar ao rolar.
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     e.target.classList.add('in');
-    e.target.querySelectorAll?.('.count').forEach(contar);
     io.unobserve(e.target);
   }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
   lp.querySelectorAll('.rv').forEach(el => io.observe(el));
   fora.push(() => io.disconnect());
 
-  // Rolagem suave para as seções + barra de progresso.
+  // Rolagem suave para as seções; barra de cima ganha borda ao rolar.
   lp.querySelectorAll('[data-scroll]').forEach(a => on(a, 'click', e => {
     e.preventDefault();
     lp.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: calmo ? 'auto' : 'smooth' });
   }));
-  const barra = lp.querySelector('.lp-progress i');
-  const rolou = () => {
-    const h = document.documentElement.scrollHeight - innerHeight;
-    barra.style.transform = `scaleX(${h > 0 ? (scrollY / h).toFixed(4) : 0})`;
-    lp.classList.toggle('scrolled', scrollY > 12);
-  };
+  const rolou = () => lp.classList.toggle('scrolled', scrollY > 12);
   on(window, 'scroll', rolou, { passive: true });
   rolou();
 
-  // Luz do cartão segue o dedo/mouse.
-  lp.querySelectorAll('.spot').forEach(c => on(c, 'pointermove', e => {
-    const r = c.getBoundingClientRect();
-    c.style.setProperty('--x', `${e.clientX - r.left}px`);
-    c.style.setProperty('--y', `${e.clientY - r.top}px`);
-  }));
-
   if (calmo) return () => fora.forEach(f => f());
 
-  // Botões magnéticos (só com mouse; no toque, um leve afundar via CSS).
-  lp.querySelectorAll('.mag').forEach(b => {
-    on(b, 'pointermove', e => {
-      if (e.pointerType !== 'mouse') return;
-      const r = b.getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width / 2)) / r.width, dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-      b.style.transform = `translate(${(dx * 10).toFixed(1)}px, ${(dy * 8).toFixed(1)}px)`;
-      b.firstElementChild && (b.firstElementChild.style.transform = `translate(${(dx * 4).toFixed(1)}px, ${(dy * 3).toFixed(1)}px)`);
+  // Painel ao vivo: troca de quadro a cada poucos segundos, só com o painel visível e sem o mouse em cima.
+  const board = lp.querySelector('.lp-board');
+  const corpo = board.querySelector('tbody');
+  let i = 0, timer = 0, visivel = false, parado = false;
+  const aplicar = q => {
+    const antes = new Map([...corpo.rows].map(r => [r.dataset.id, { y: r.getBoundingClientRect().top, st: r.dataset.st }]));
+    corpo.innerHTML = q.map(linha).map(x => x.__raw).join('');
+    [...corpo.rows].forEach(r => {
+      const a = antes.get(r.dataset.id);
+      if (!a) return;
+      if (a.st !== r.dataset.st) r.querySelector('.st b')?.classList.add('flap');
+      const dy = a.y - r.getBoundingClientRect().top;
+      if (dy) r.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 520, easing: 'cubic-bezier(.2,.8,.2,1)' });
     });
-    on(b, 'pointerleave', () => { b.style.transform = ''; b.firstElementChild && (b.firstElementChild.style.transform = ''); });
-  });
-
-  // Estado compartilhado pelo laço de quadros.
-  const hero = lp.querySelector('.lp-hero');
-  const glow = lp.querySelector('.lp-glow');
-  const phone = lp.querySelector('.lp-phone');
-  const stage = lp.querySelector('.lp-stage');
-  const beatSec = lp.querySelector('.lp-beat');
-  const beat = lp.querySelector('.beat');
-  const sombra = lp.querySelector('.beat-shadow');
-  const st = {
-    gx: 0.7, gy: 0.3, tgx: 0.7, tgy: 0.3,          // luz do topo
-    rx: 0, ry: 0, trx: 0, try: 0,                  // inclinação do celular
-    bx: 600, tbx: 600, amp: 34, ativo: false, ultimo: 0, vel: 0, t: 0
   };
-
-  on(hero, 'pointermove', e => {
-    const r = hero.getBoundingClientRect();
-    st.tgx = (e.clientX - r.left) / r.width; st.tgy = (e.clientY - r.top) / r.height;
-    const s = stage.getBoundingClientRect();
-    st.try = ((e.clientX - (s.left + s.width / 2)) / s.width) * 16;
-    st.trx = -((e.clientY - (s.top + s.height / 2)) / s.height) * 12;
-  }, { passive: true });
-  on(hero, 'pointerleave', () => { st.trx = 0; st.try = 0; });
-
-  // Giroscópio do celular inclina o mockup (quando o aparelho permite sem pedir).
-  on(window, 'deviceorientation', e => {
-    if (e.gamma == null) return;
-    st.try = Math.max(-14, Math.min(14, e.gamma * 0.5));
-    st.trx = Math.max(-10, Math.min(10, (e.beta - 45) * -0.3));
-  }, { passive: true });
-
-  // Pulso interativo: o pico segue o dedo, a velocidade aumenta a batida, o toque dispara um batimento.
-  const posBeat = e => {
-    const r = beatSec.getBoundingClientRect();
-    return ((e.clientX - r.left) / r.width) * 1200;
+  const passo = () => {
+    timer = 0;
+    if (!visivel || parado || document.hidden) return;
+    i = (i + 1) % QUADROS.length;
+    aplicar(QUADROS[i]);
+    timer = setTimeout(passo, i === 0 ? 3600 : 2600);
   };
-  on(beatSec, 'pointermove', e => {
-    const x = posBeat(e);
-    st.vel = Math.min(80, Math.abs(x - st.tbx));
-    st.tbx = x; st.ativo = true; st.ultimo = performance.now();
-  }, { passive: true });
-  on(beatSec, 'pointerdown', e => {
-    st.tbx = st.bx = posBeat(e); st.amp = 96; st.ativo = true; st.ultimo = performance.now();
-    beatSec.classList.remove('hit'); void beatSec.offsetWidth; beatSec.classList.add('hit');
-    if (e.isTrusted && navigator.userActivation?.hasBeenActive) navigator.vibrate?.(12);
-  });
-
-  const caminho = (x, a) => {
-    const y = 100;
-    return `M0 ${y}H${(x - 62).toFixed(1)}L${(x - 40).toFixed(1)} ${(y - a * 0.35).toFixed(1)}L${(x - 16).toFixed(1)} ${(y + a).toFixed(1)}L${(x + 10).toFixed(1)} ${(y - a).toFixed(1)}L${(x + 32).toFixed(1)} ${(y + a * 0.3).toFixed(1)}L${(x + 52).toFixed(1)} ${y}H1200`;
-  };
-
-  let visivel = { hero: true, beat: false };
-  const io2 = new IntersectionObserver(es => es.forEach(e => { visivel[e.target === hero ? 'hero' : 'beat'] = e.isIntersecting; if (e.isIntersecting) acordar(); }), { threshold: 0 });
-  io2.observe(hero); io2.observe(beatSec);
-  fora.push(() => io2.disconnect());
-
-  let raf = 0;
-  const quadro = t => {
-    raf = 0;
-    st.t = t / 1000;
-    if (visivel.hero) {
-      st.gx = lerp(st.gx, st.tgx, 0.08); st.gy = lerp(st.gy, st.tgy, 0.08);
-      glow.style.transform = `translate3d(${(st.gx * 100 - 50).toFixed(2)}%, ${(st.gy * 100 - 50).toFixed(2)}%, 0)`;
-      st.rx = lerp(st.rx, st.trx, 0.1); st.ry = lerp(st.ry, st.try, 0.1);
-      phone.style.transform = `rotateX(${st.rx.toFixed(2)}deg) rotateY(${st.ry.toFixed(2)}deg)`;
-    }
-    if (visivel.beat) {
-      const parado = performance.now() - st.ultimo > 1600;
-      if (parado) { st.ativo = false; st.tbx = 600 + Math.sin(st.t * 0.6) * 420; }
-      st.bx = lerp(st.bx, st.tbx, st.ativo ? 0.22 : 0.04);
-      const alvo = 30 + st.vel * 0.8 + Math.max(0, Math.sin(st.t * 5.2)) * 10;
-      st.amp = lerp(st.amp, alvo, 0.12);
-      st.vel *= 0.9;
-      const d = caminho(st.bx, st.amp);
-      beat.setAttribute('d', d);
-      sombra.setAttribute('d', d);
-    }
-    if (visivel.hero || visivel.beat) raf = requestAnimationFrame(quadro);
-  };
-  const acordar = () => { if (!raf && !document.hidden) raf = requestAnimationFrame(quadro); };
+  const acordar = () => { if (!timer && visivel && !parado && !document.hidden) timer = setTimeout(passo, 2200); };
+  const io2 = new IntersectionObserver(es => { visivel = es[0].isIntersecting; acordar(); }, { threshold: 0.4 });
+  io2.observe(board);
+  on(board, 'pointerenter', () => { parado = true; });
+  on(board, 'pointerleave', () => { parado = false; acordar(); });
   on(document, 'visibilitychange', acordar);
-  acordar();
-  beat.setAttribute('d', caminho(600, 34)); sombra.setAttribute('d', caminho(600, 34));
-  fora.push(() => cancelAnimationFrame(raf));
+  fora.push(() => { io2.disconnect(); clearTimeout(timer); });
 
   return () => fora.forEach(f => f());
 }

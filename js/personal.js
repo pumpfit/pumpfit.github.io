@@ -18,7 +18,7 @@ export function nav(r) {
   const s = get();
   const msg = s.alunos.some(a => naoLidas(s, a.id));
   return [
-    { href: '#/p/hoje', label: 'Hoje', icon: 'hoje', cur: v === 'hoje' },
+    { href: '#/p/hoje', label: 'Hoje', icon: 'hoje', cur: v === 'hoje', dot: Object.values(s.mudou || {}).some(m => !m.visto) },
     { href: '#/p/alunos', label: 'Alunos', icon: 'alunos', cur: v === 'alunos' || v === 'aluno', dot: msg },
     { href: '#/p/treinos', label: 'Treinos', icon: 'peso', cur: v === 'treinos' },
     { href: '#/p/agenda', label: 'Agenda', icon: 'agenda', cur: v === 'agenda' },
@@ -64,17 +64,39 @@ function alertas(s) {
   const lucas = aluno('lucas');
   const out = [];
   for (const a of s.alunos) {
-    if (naoLidas(s, a.id)) out.push({ k: 'msg-' + a.id, cor: 'var(--a-ink)', titulo: `${primeiro(a.id)} mandou mensagem`, detalhe: (s.msgs[a.id].at(-1).txt || '').slice(0, 60), btn: 'Responder', go: `#/p/aluno/${a.id}` });
+    if (naoLidas(s, a.id)) out.push({ k: 'msg-' + a.id, cor: 'var(--chg)', titulo: `${primeiro(a.id)} mandou mensagem`, detalhe: (s.msgs[a.id].at(-1).txt || '').slice(0, 60), btn: 'Responder', go: `#/p/aluno/${a.id}` });
   }
-  out.push({ k: 'sumido', cor: 'var(--warn)', titulo: 'Lucas Prado sumiu há 9 dias', detalhe: 'Antes vinha 3x por semana', btn: 'Chamar no WhatsApp', feito: 'Mensagem enviada', ok: !!s.feitos.sumido || lucas?.ultimo === 'Hoje' });
-  out.push({ k: 'pix', cor: 'var(--warn)', titulo: atras.length ? `${atras.length} mensalidades atrasadas` : 'Mensalidades atrasadas', detalhe: atras.length ? atras.map(a => primeiro(a.id)).join(' e ') + ' · venceu dia 20' : 'Cobranças enviadas', btn: 'Enviar Pix', feito: 'Pix enviado', ok: !atras.length, act: 'cobrarTodos' });
-  out.push({ k: 'carga', cor: 'var(--info)', titulo: 'Carga parada há 4 semanas', detalhe: 'Rafael Lima · agachamento em 60 kg', btn: 'Ajustar treino', feito: 'Treino aberto', ok: !!s.feitos.carga, go: '#/p/treinos/rafael/B' });
-  out.push({ k: 'ficha', cor: 'var(--a-ink)', titulo: 'Treino de Marina vence sexta', detalhe: 'Ficha atual há 6 semanas', btn: 'Trocar ficha', feito: 'Ficha aberta', ok: !!s.feitos.ficha, go: '#/p/treinos/marina/A' });
+  out.push({ k: 'sumido', cor: 'var(--chg)', titulo: 'Lucas Prado sumiu há 9 dias', detalhe: 'Antes vinha 3x por semana', btn: 'Chamar no WhatsApp', feito: 'Mensagem enviada', ok: !!s.feitos.sumido || lucas?.ultimo === 'Hoje' });
+  out.push({ k: 'pix', cor: 'var(--chg)', titulo: atras.length ? `${atras.length} mensalidades atrasadas` : 'Mensalidades atrasadas', detalhe: atras.length ? atras.map(a => primeiro(a.id)).join(' e ') + ' · venceu dia 20' : 'Cobranças enviadas', btn: 'Enviar Pix', feito: 'Pix enviado', ok: !atras.length, act: 'cobrarTodos' });
+  out.push({ k: 'carga', cor: 'var(--tx3)', titulo: 'Carga parada há 4 semanas', detalhe: 'Rafael Lima · agachamento em 60 kg', btn: 'Ajustar treino', feito: 'Treino aberto', ok: !!s.feitos.carga, go: '#/p/treinos/rafael/B' });
+  out.push({ k: 'ficha', cor: 'var(--tx3)', titulo: 'Treino de Marina vence sexta', detalhe: 'Ficha atual há 6 semanas', btn: 'Trocar ficha', feito: 'Ficha aberta', ok: !!s.feitos.ficha, go: '#/p/treinos/marina/A' });
   return out;
 }
 
-const alertaHtml = al => html`<div class="row" style="opacity:${al.ok ? 0.5 : 1};transition:opacity .3s">
-  <span class="${al.ok ? '' : 'ping'}" style="color:${al.cor};${al.ok ? 'width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block' : ''}"></span>
+// Painel de partidas: aulas de hoje em ordem de horário; feitas descem para o fim, riscadas;
+// o que o aluno mudou (remarcou, marcou, cancelou) acende em laranja até o personal tocar em "Visto".
+function partidas(s) {
+  const mud = s.mudou || {};
+  const viva = x => { const m = mud[`${HOJE}-${x.h}`]; return m && !m.visto ? m : null; };
+  const lista = aulasDoDia(s, HOJE).map(x => ({ ...x, chg: viva(x) }));
+  for (const [k, m] of Object.entries(mud)) {
+    const [d, h] = k.split('-');
+    if (+d === HOJE && m.tipo === 'cancelou' && !m.visto && !s.agenda[d]?.[h]) lista.push({ h, id: m.id, chg: m, gone: true });
+  }
+  const ordem = x => (x.feita ? 1 : 0);
+  return lista.sort((a, b) => ordem(a) - ordem(b) || a.h.localeCompare(b.h));
+}
+const SIT_CHG = m => m.tipo === 'remarcou' ? `Remarcou · era ${m.era}` : m.tipo === 'cancelou' ? 'Cancelou' : 'Marcou agora';
+function situacao(x) {
+  if (x.chg) return { cls: x.gone ? 'is-chg is-gone' : 'is-chg', txt: SIT_CHG(x.chg), st: 'chg-' + x.chg.tipo };
+  if (x.feita) return { cls: 'is-done', txt: 'Feita', st: 'feita' };
+  if (x.prox) return { cls: 'is-now', txt: 'Próxima', st: 'prox' };
+  return { cls: '', txt: 'Confirmada', st: 'conf' };
+}
+const FICHA_HOJE = { 'Ganhar massa': 'A', Emagrecer: 'C', Definição: 'B', Condicionamento: 'A', 'Saúde e postura': 'B' };
+
+const alertaHtml = al => html`<div class="row al" style="opacity:${al.ok ? 0.55 : 1};transition:opacity .3s">
+  <span class="mark" style="color:${al.ok ? 'var(--line2)' : al.cor}"></span>
   <span class="grow"><span class="t">${al.titulo}</span><span class="s">${al.detalhe}</span></span>
   ${al.ok ? html`<span class="btn sm done">${ic('check', 16)}${al.feito}</span>`
     : html`<button type="button" class="btn sm" data-act="alerta" data-k="${al.k}" data-go="${al.go || ''}" data-sub="${al.act || ''}">${al.btn}</button>`}
@@ -92,45 +114,51 @@ function hojeV() {
   const emDia = s.alunos.filter(a => a.pag === 'ok').length;
   const total = s.alunos.length;
   const novidades = s.eventos.filter(e => e.de === 'a').slice(0, 5);
-  const st = ui.anim ? 'stagger' : '';
+  const pt = partidas(s);
+  const mudancas = pt.filter(x => x.chg).length;
+  const feitas = ag.filter(x => x.feita).length;
+  const nome = (C.conta()?.nome || '[Nome]').split(' ')[0];
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
     <header class="ph">
-      <div><p class="eyebrow">Terça, 27 de outubro</p><h1>Bom dia, ${(C.conta()?.nome || '[Nome]').split(' ')[0]}</h1></div>
+      <div><h1>Hoje</h1><p class="meta">Ter 27 out · Bom dia, ${nome}</p></div>
       <div class="ph-actions"><a class="btn" href="#/p/treinos">Montar treino</a><button type="button" class="btn p" data-act="novoAluno">${ic('mais', 18)}Novo aluno</button></div>
     </header>
 
-    <section class="grid g2 md-g4 ${st}" aria-label="Resumo do dia">
-      <a class="tile" href="#/p/alunos"><span class="lbl">Alunos ativos</span><span class="num">30</span><span class="small muted">Ver todos</span></a>
-      <a class="tile" href="#/p/agenda"><span class="lbl">Aulas hoje</span><span class="num">${ag.length}</span><span class="small muted">${prox ? 'Próxima às ' + prox.h : 'Dia encerrado'}</span></a>
-      <a class="tile" href="#/p/fin"><span class="lbl">Em dia</span><span class="num tnum">${emDia}<span class="muted" style="font-size:.55em">/${total}</span></span><span class="bar"><i style="transform:scaleX(${(emDia / total).toFixed(3)})"></i></span></a>
-      <div class="tile alert"><span class="lbl">Atenção</span><span class="num">${pend}</span><span class="small" style="color:var(--warn-ink)">${pend ? 'Veja os alertas' : 'Tudo resolvido'}</span></div>
+    <section class="band" aria-label="Resumo do dia">
+      <a href="#/p/alunos"><span class="lbl">Alunos ativos</span><span class="num">30</span><span class="small muted">Ver todos</span></a>
+      <a href="#/p/agenda"><span class="lbl">Aulas hoje</span><span class="num">${ag.length}</span><span class="small muted">${feitas} feitas · ${prox ? 'próxima ' + prox.h : 'dia encerrado'}</span></a>
+      <a href="#/p/fin"><span class="lbl">Em dia</span><span class="num">${emDia}<small>/${total}</small></span><span class="small muted">mensalidades de outubro</span></a>
+      <div class="${pend + mudancas ? 'chg' : ''}"><span class="lbl">Precisa de você</span><span class="num">${pend + mudancas}</span><span class="small muted">${mudancas ? `${mudancas} ${mudancas > 1 ? 'mudanças' : 'mudança'} na agenda · ` : ''}${pend} ${pend === 1 ? 'alerta' : 'alertas'}</span></div>
     </section>
 
-    <div class="grid lg-21">
-      <div class="page">
-        ${prox ? html`<section class="hero" aria-label="Próxima aula">
-          <div style="display:flex;justify-content:space-between;align-items:center"><span class="lbl">Próxima aula</span><span class="num" style="font-size:22px">${prox.h}</span></div>
-          <div style="display:flex;align-items:center;gap:12px"><span class="av" style="background:var(--on-a);color:var(--a)">${iniciais(aluno(prox.id).nome)}</span><div><strong style="font-size:18px">${aluno(prox.id).nome}</strong><div style="opacity:.75">${aluno(prox.id).obj}</div></div></div>
-          <div class="grid g2"><a class="btn" href="#/p/aluno/${prox.id}">Abrir ficha</a><button type="button" class="btn out" data-act="presenca" data-dia="${HOJE}" data-hora="${prox.h}">Marcar presença</button></div>
-        </section>` : html`<section class="card"><h2>Dia encerrado</h2><p class="muted">Todas as aulas de hoje foram registradas.</p></section>`}
+    <div class="grid lg-21" style="gap:28px 36px">
+      <section aria-labelledby="t-partidas">
+        <div class="card-h"><h2 id="t-partidas">Partidas de hoje</h2><a class="btn sm" href="#/p/agenda">Semana</a></div>
+        ${pt.length ? html`<table class="brd">
+          <thead><tr><th scope="col">Hora</th><th scope="col">Aluno</th><th scope="col" class="fx">Ficha</th><th scope="col">Situação</th></tr></thead>
+          <tbody>${pt.map(x => {
+            const a = aluno(x.id);
+            const sit = situacao(x);
+            const k = FICHA_HOJE[a?.obj] || 'B';
+            return html`<tr class="${sit.cls}" data-flip="${x.id}" data-st="${sit.st}">
+              <td class="h">${x.h}</td>
+              <td class="who"><a href="#/p/aluno/${x.id}">${a?.nome || 'Aluno'}</a><span>${a?.obj || ''}</span></td>
+              <td class="fx">${k} · ${NOME_FICHA[k]}</td>
+              <td class="st"><b>${sit.txt}</b>${x.chg ? html`<button type="button" class="btn sm" data-act="visto" data-k="${HOJE}-${x.h}">Visto</button>`
+                : x.prox ? html`<button type="button" class="btn sm" data-act="presenca" data-dia="${HOJE}" data-hora="${x.h}">Presença</button>` : ''}</td>
+            </tr>`;
+          })}</tbody>
+        </table>` : html`<p class="muted" style="padding:16px 0">Nenhuma aula marcada para hoje.</p>`}
+      </section>
 
-        <section class="card">
-          <div class="card-h"><h2>Precisa de você</h2><span class="small muted">${pend} pendentes</span></div>
-          <div class="list">${al.map(alertaHtml)}</div>
+      <div class="page" style="gap:28px">
+        <section aria-labelledby="t-precisa">
+          <div class="card-h"><h2 id="t-precisa">Precisa de você</h2><span class="lbl">${pend} pendentes</span></div>
+          <div class="list" style="border-top:1px solid var(--line2)">${al.map(alertaHtml)}</div>
         </section>
-      </div>
-
-      <div class="page">
-        <section class="card">
-          <div class="card-h"><h2>Agenda de hoje</h2><a class="btn sm" href="#/p/agenda">Semana</a></div>
-          <div class="list">${ag.map(x => html`<a class="row" href="#/p/aluno/${x.id}">
-            <span class="time" style="${x.prox ? 'color:var(--a-ink)' : ''}">${x.h}</span>
-            <span class="grow"><span class="t">${aluno(x.id).nome}</span><span class="s">${aluno(x.id).obj}</span></span>
-            <span class="pill ${x.feita ? 'ok' : x.prox ? 'on' : ''}">${x.feita ? 'Concluída' : x.prox ? 'Próxima' : 'Agendada'}</span></a>`)}</div>
-        </section>
-        <section class="card">
-          <div class="card-h"><h2>Novidades dos alunos</h2><span class="small muted">ao vivo</span></div>
-          ${novidades.length ? html`<div class="list">${novidades.map(e => html`<a class="row" href="#/p/aluno/${e.aluno}"><span class="av">${iniciais(aluno(e.aluno)?.nome || '?')}</span><span class="grow"><span class="t">${e.txt}</span><span class="s">${ha(e.t)}</span></span></a>`)}</div>`
+        <section aria-labelledby="t-novidades">
+          <div class="card-h"><h2 id="t-novidades">Novidades dos alunos</h2><span class="lbl">ao vivo</span></div>
+          ${novidades.length ? html`<div class="list" style="border-top:1px solid var(--line2)">${novidades.map(e => html`<a class="row" href="#/p/aluno/${e.aluno}"><span class="av">${iniciais(aluno(e.aluno)?.nome || '?')}</span><span class="grow"><span class="t">${e.txt}</span><span class="s mono">${ha(e.t)}</span></span></a>`)}</div>`
             : html`<p class="muted small">Quando um aluno treinar, registrar peso, pagar ou mandar mensagem, aparece aqui na hora.</p>`}
         </section>
       </div>
@@ -151,7 +179,7 @@ function alunosV() {
     return true;
   });
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">30 ativos · amostra de 8</p><h1>Alunos</h1></div><div class="ph-actions"><a class="btn" href="#/p/acessos">Acesso dos alunos</a><a class="btn" href="#/p/clientes">Possíveis clientes</a><button type="button" class="btn p" data-act="novoAluno">${ic('mais', 18)}Novo aluno</button></div></header>
+    <header class="ph"><div><h1>Alunos</h1><p class="meta">30 ativos · amostra de 8</p></div><div class="ph-actions"><a class="btn" href="#/p/acessos">Acesso dos alunos</a><a class="btn" href="#/p/clientes">Possíveis clientes</a><button type="button" class="btn p" data-act="novoAluno">${ic('mais', 18)}Novo aluno</button></div></header>
     <label class="field">${ic('busca', 18)}<span class="sr">Buscar aluno</span><input id="busca-aluno" type="search" placeholder="Buscar por nome ou objetivo" value="${ui.busca}" data-in="busca" autocomplete="off"></label>
     <div class="chips" role="group" aria-label="Filtrar alunos">${FILTROS.map(f => html`<button type="button" class="chip" aria-pressed="${ui.filtro === f}" data-act="filtro" data-v="${f}">${f}</button>`)}</div>
     ${lista.length ? html`<div class="grid md-g2 lg-g2 ${ui.anim ? 'stagger' : ''}">${lista.map(a => html`<a class="card row" style="padding:14px 16px" href="#/p/aluno/${a.id}">
@@ -238,7 +266,7 @@ function editorV(id = 'juliana', letra = 'B') {
     <output>${txt}</output>
     <button type="button" aria-label="Aumentar ${rot.toLowerCase()} de ${lib(e.ref).nome}" data-act="exAj" data-id="${id}" data-l="${letra}" data-u="${e.uid}" data-f="${campo}" data-dt="1">${ic('mais', 16)}</button></div></div>`;
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Editor de treino · objetivo: ${a.obj}</p><h1>${a.nome}</h1></div><a class="btn" href="#/p/aluno/${id}">Ver ficha</a></header>
+    <header class="ph"><div><h1>${a.nome}</h1><p class="meta">Editor de treino · objetivo: ${a.obj}</p></div><a class="btn" href="#/p/aluno/${id}">Ver ficha</a></header>
     <div class="chips" role="group" aria-label="Escolher aluno">${s.alunos.map(x => html`<a class="chip" style="display:inline-flex;align-items:center" aria-pressed="${x.id === id}" href="#/p/treinos/${x.id}/${letra}">${primeiro(x.id)}</a>`)}</div>
     <div class="seg g3 grid" role="group" aria-label="Escolher ficha">${['A', 'B', 'C'].map(k => html`<a class="segbtn" aria-pressed="${k === letra}" href="#/p/treinos/${id}/${k}"><strong class="num" style="font-size:18px">Treino ${k}</strong><span class="muted small">${NOME_FICHA[k]} · ${s.fichas[id][k].length}</span></a>`)}</div>
 
@@ -284,7 +312,7 @@ function agendaV() {
     return { d: +dd, h, id, feita: !!s.presenca[`${dd}-${h}`] };
   })() : null;
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Semana de 26 a 31 de outubro</p><h1>Agenda</h1></div></header>
+    <header class="ph"><div><h1>Agenda</h1><p class="meta">Semana de 26 a 31 de outubro</p></div></header>
     <div class="days" role="group" aria-label="Dia da semana">${DIAS.map((x, i) => html`<button type="button" class="day" aria-pressed="${i === d}" data-act="dia" data-i="${i}"><span class="small" style="font-weight:600">${x.n}</span><span class="num">${x.d}</span><span class="small muted">${Object.keys(s.agenda[i] || {}).length}</span></button>`)}</div>
     <h2>${DIAS[d].n}, ${DIAS[d].d} de outubro${d === HOJE ? ' · hoje' : ''}</h2>
     <div class="page ${ui.anim ? 'stagger' : ''}" style="gap:8px">${HORAS.map(h => {
@@ -316,7 +344,7 @@ function finV() {
   const nov = s.alunos.filter(a => a.nov === 'paga').length;
   const lista = s.alunos.filter(a => ui.finFiltro === 'Em dia' ? a.pag === 'ok' : ui.finFiltro === 'Atrasadas' ? a.pag === 'atraso' : ui.finFiltro === 'Pix enviado' ? a.pag === 'pix' : true);
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Outubro de 2026</p><h1>Financeiro</h1></div><button type="button" class="btn p" data-act="cobrarTodos">Cobrar atrasados</button></header>
+    <header class="ph"><div><h1>Financeiro</h1><p class="meta">Outubro de 2026</p></div><button type="button" class="btn p" data-act="cobrarTodos">Cobrar atrasados</button></header>
     <section class="grid g2 md-g4">
       <div class="tile"><span class="lbl">Recebido</span><span class="num" style="font-size:24px">R$ [VALOR]</span></div>
       <div class="tile"><span class="lbl">Em dia</span><span class="num tnum">${emDia}<span class="muted" style="font-size:.55em">/${s.alunos.length}</span></span><span class="bar"><i style="transform:scaleX(${(emDia / s.alunos.length).toFixed(3)})"></i></span></div>
@@ -341,6 +369,7 @@ const mexer = (d, fn) => {
 };
 export const acts = {
   novoAluno: () => toast('Link de cadastro copiado. Envie no WhatsApp do novo aluno'),
+  visto: d => update(n => { const m = (n.mudou ||= {})[d.k]; if (m) m.visto = true; }),
   whats: d => toast(`Conversa com ${primeiro(d.id)} aberta no WhatsApp`),
   busca: v => { ui.busca = v; redraw(); },
   filtro: d => { ui.filtro = d.v; redraw(); },

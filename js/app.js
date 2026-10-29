@@ -11,7 +11,7 @@ const TEMA = 'app-personal:tema';
 
 function aplicarTema(t) {
   document.documentElement.dataset.theme = t;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'light' ? '#F5F5F2' : '#0B0B0C');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#0A0B0D');
 }
 let tema;
 try { tema = localStorage.getItem(TEMA); } catch { /* sem armazenamento */ }
@@ -39,10 +39,9 @@ const rota = () => {
   return { role, path };
 };
 
-// Marca Pump (ver brand/index.html): símbolo de batimento + logotipo PUMP pesado e inclinado.
-const SIMBOLO = '<svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect class="logo-bg" width="512" height="512" rx="112"/><path d="M84 280H178L210 224L250 344L300 132L346 308L372 280H428" transform="translate(256 256) skewX(-12) translate(-256 -256)" fill="none" stroke="#D4FF3A" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const LOGOTIPO = '<svg class="wordmark" viewBox="0 0 800 200" aria-hidden="true"><g transform="translate(46 0) skewX(-12)" fill="currentColor"><path fill-rule="evenodd" d="M0 0H112Q160 0 160 48V84Q160 132 112 132H56V200H0Z M56 46H104V86H56Z"/><path fill="#D4FF3A" d="M56 46H104V86H56Z"/><path transform="translate(184 0)" d="M0 0H56V140Q56 150 66 150H94Q104 150 104 140V0H160V148Q160 200 108 200H52Q0 200 0 148Z"/><path transform="translate(368 0)" d="M0 200V0H60L100 70L140 0H200V200H146V96L114 150H86L54 96V200Z"/><path fill-rule="evenodd" transform="translate(592 0)" d="M0 0H112Q160 0 160 48V84Q160 132 112 132H56V200H0Z M56 46H104V86H56Z"/></g></svg>';
-const PULSO = '<svg class="pulse" viewBox="0 0 1100 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 28H430l18-22 26 44 26-44 18 22H1100"/></svg>';
+// Marca Pump (ver brand/index.html): código PMP de painel de partidas + quadrado laranja de "mudou".
+const SIMBOLO = '<svg class="logo" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" fill="#101215"/><g fill="none" stroke="#F2F2EE" stroke-width="40" stroke-linecap="square" transform="translate(-15 0)"><path d="M96 331V181H146Q186 181 186 221Q186 261 146 261H96"/><path d="M226 331V181L266 251L306 181V331"/><path d="M356 331V181H406Q446 181 446 221Q446 261 406 261H356"/></g><rect x="392" y="80" width="44" height="44" fill="#FF6A13"/></svg>';
+const LOGOTIPO = '<span class="wordmark">Pump</span>';
 const marca = html`<a class="brand" href="#/" aria-label="Pump, página inicial">${raw(SIMBOLO)}${raw(LOGOTIPO)}</a>`;
 
 function layout(role, itens, conteudo) {
@@ -93,9 +92,13 @@ function render() {
     : r.role === 'entrar' ? C.entrarV({ marca, anim: mudou })
     : r.role === 'convite' ? C.conviteV({ marca, anim: mudou })
     : landing();
+  // Painel de partidas: guarda onde cada linha estava para ela deslizar até o novo lugar.
+  const antes = new Map();
+  if (!mudou) app.querySelectorAll('[data-flip]').forEach(el => antes.set(el.dataset.flip, { y: el.getBoundingClientRect().top, st: el.dataset.st }));
   desmontar?.(); desmontar = null;
   app.innerHTML = out.__raw;
   if (!r.role) desmontar = L.mount(app);
+  if (antes.size) reordenar(antes);
 
   if (mudou) {
     ultimo = chave;
@@ -111,6 +114,19 @@ function render() {
     }
   }
   A.depoisDeRender?.();
+}
+
+const calmo = matchMedia('(prefers-reduced-motion: reduce)');
+function reordenar(antes) {
+  app.querySelectorAll('[data-flip]').forEach(el => {
+    const a = antes.get(el.dataset.flip);
+    if (!a) return;
+    const st = el.querySelector('.st b');
+    if (a.st !== el.dataset.st && st) st.classList.add('flap');
+    const dy = a.y - el.getBoundingClientRect().top;
+    if (!dy || calmo.matches || !el.animate) return;
+    el.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration: 460, easing: 'cubic-bezier(.2,.8,.2,1)' });
+  });
 }
 
 let pendente = false;
@@ -142,6 +158,19 @@ app.addEventListener('submit', e => {
   e.preventDefault();
   acts[el.dataset.submit]?.(new FormData(el), el);
 });
+// Treino em tela cheia: deslizar para cima passa ao próximo exercício quando o atual terminou.
+let toque = null;
+app.addEventListener('touchstart', e => {
+  const el = e.target.closest('[data-swipe]');
+  toque = el && !e.target.closest('button, input') ? { y: e.touches[0].clientY, el } : null;
+}, { passive: true });
+app.addEventListener('touchend', e => {
+  if (!toque) return;
+  const dy = e.changedTouches[0].clientY - toque.y;
+  const { el } = toque;
+  toque = null;
+  if (dy < -70 && el.dataset.pode === '1') acts[el.dataset.swipe]?.(el.dataset, el, e);
+}, { passive: true });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && (ui.slot || ui.biblio || ui.remarcar != null)) {
     ui.slot = null; ui.biblio = false; ui.remarcar = null;

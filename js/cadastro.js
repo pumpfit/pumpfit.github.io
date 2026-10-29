@@ -196,12 +196,12 @@ async function carregarAcessos() {
 }
 export function acessosV({ anim }) {
   const c = conta();
-  if (!c) return html`<div class="page ${anim ? 'enter' : ''}"><header class="ph"><div><p class="eyebrow">Banco de dados</p><h1>Acesso dos alunos</h1></div></header>
+  if (!c) return html`<div class="page ${anim ? 'enter' : ''}"><header class="ph"><div><h1>Acesso dos alunos</h1><p class="meta">Banco de dados</p></div></header>
     <section class="card"><h2>Entre na sua conta de personal</h2><p class="muted" style="margin:6px 0 14px">Só você convida e vê os seus alunos.</p><div class="ph-actions"><a class="btn p" href="#/entrar">Entrar</a><a class="btn" href="#/cadastro">Criar conta</a></div></section></div>`;
   const lista = ac.lista || [], f = ac.form, e = ac.erros;
   const ativos = lista.filter(a => a.ativo).length;
   return html`<div class="page ${anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">${c.nome} · ${ativos} ativos · ${lista.length - ativos} convites pendentes</p><h1>Acesso dos alunos</h1></div>
+    <header class="ph"><div><h1>Acesso dos alunos</h1><p class="meta">${c.nome} · ${ativos} ativos · ${lista.length - ativos} convites pendentes</p></div>
       <button type="button" class="btn p" data-act="novoAcesso" aria-expanded="${ac.novo}">${ic(ac.novo ? 'x' : 'mais', 18)}${ac.novo ? 'Fechar' : 'Convidar aluno'}</button></header>
     <p class="muted" style="max-width:640px">Cadastre o aluno e envie o link pelo WhatsApp. Ele abre, cria a própria senha e passa a entrar no app. O link vale 7 dias e funciona uma vez só.</p>
     ${semServidor ? html`<p class="small muted aviso-local">Link público: o convite só abre neste mesmo aparelho, porque os dados ficam guardados aqui. Para o aluno abrir no celular dele, falta ligar o servidor.</p>` : ''}
@@ -251,14 +251,14 @@ async function carregar() {
 
 export function clientesV({ anim }) {
   const c = conta();
-  if (!c) return html`<div class="page ${anim ? 'enter' : ''}"><header class="ph"><div><p class="eyebrow">Banco de dados</p><h1>Possíveis clientes</h1></div></header>
+  if (!c) return html`<div class="page ${anim ? 'enter' : ''}"><header class="ph"><div><h1>Possíveis clientes</h1><p class="meta">Banco de dados</p></div></header>
     <section class="card"><h2>Entre na sua conta</h2><p class="muted" style="margin:6px 0 14px">Os possíveis clientes ficam ligados ao seu cadastro e só você vê.</p><div class="ph-actions"><a class="btn p" href="#/entrar">Entrar</a><a class="btn" href="#/cadastro">Criar conta</a></div></section></div>`;
   const lista = st.clientes || [];
   const cont = s => lista.filter(x => x.status === s).length;
   const vis = st.filtro === 'todos' ? lista : lista.filter(x => x.status === st.filtro);
   const f = st.cform, e = st.cerros;
   return html`<div class="page ${anim ? 'enter' : ''}">
-    <header class="ph"><div><p class="eyebrow">Banco de dados · ${c.nome} · <button type="button" class="lp-link" style="font-size:inherit" data-act="sairConta">Sair</button></p><h1>Possíveis clientes</h1>${avisoLocal()}</div>
+    <header class="ph"><div><h1>Possíveis clientes</h1><p class="meta">Banco de dados · ${c.nome} · <button type="button" class="lp-link" style="font-size:inherit" data-act="sairConta">Sair</button></p>${avisoLocal()}</div>
       <button type="button" class="btn p" data-act="novoCliente" aria-expanded="${st.novo}">${ic(st.novo ? 'x' : 'mais', 18)}${st.novo ? 'Fechar' : 'Novo cliente'}</button></header>
 
     ${st.novo ? html`<form class="card cad-card enter" data-submit="salvarCliente" novalidate style="max-width:none">
