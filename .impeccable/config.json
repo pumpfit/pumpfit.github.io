@@ -83,6 +83,15 @@
         ],
         "createdAt": "2026-10-29T20:56:37.699Z",
         "reason": "Jarvis: espacamento largo so em rotulos curtos em maiusculas (PMP, HORA, SITUACAO) de um esboco de decisao que nao vai para o app"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "brand/index.html"
+        ],
+        "createdAt": "2026-10-29T21:19:06.603Z",
+        "reason": "Jarvis: unico caso e a amostra de titulo em Barlow Condensed 44px no manual da marca; altura de linha 1 e intencional para letra de titulo, nao e texto corrido"
       }
     ]
   }
