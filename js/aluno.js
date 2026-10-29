@@ -131,7 +131,7 @@ function treinandoV() {
       <span class="feed-title">Treino ${t.l} · ${NOME_FICHA[t.l]}</span>
       <span class="feed-count mono">${t.ex + 1}/${f.length}</span>
     </div>
-    <div class="prog feed-prog" style="grid-template-columns:repeat(${f.length},minmax(0,1fr))" role="progressbar" aria-label="Progresso do treino" aria-valuemin="0" aria-valuemax="${f.length}" aria-valuenow="${t.ex}">${f.map((x, i) => html`<i><b style="transform:scaleX(${i < t.ex ? 1 : i === t.ex ? Math.min(1, t.serie / e.series).toFixed(3) : 0})"></b></i>`)}</div>
+    <div class="prog feed-prog" style="grid-template-columns:repeat(${f.length},minmax(0,1fr))" role="progressbar" aria-label="Progresso do treino" aria-valuemin="0" aria-valuemax="${f.length}" aria-valuenow="${t.ex}">${f.map((x, i) => html`<i class="${i === t.ex ? 'cur' : ''}"><b style="transform:scaleX(${i < t.ex ? 1 : i === t.ex ? Math.min(1, t.serie / e.series).toFixed(3) : 0})"></b></i>`)}</div>
 
     <div class="feed-item ${novo ? 'snap' : ''}">
       <div class="feed-media">
@@ -144,7 +144,7 @@ function treinandoV() {
       <div class="feed-rail">
         <button type="button" data-act="video" data-n="${e.L.nome}"><i>${ic('play', 20)}</i>Vídeo</button>
         <button type="button" data-act="dica" aria-pressed="${ui.dica ? 'true' : 'false'}"><i>${ic('chat', 20)}</i>Dica</button>
-        <button type="button" data-act="pedirAjuste"><i>${ic('enviar', 20)}</i>Ajuste</button>
+        <button type="button" data-act="pedirAjuste"><i>${ic('ajuste', 20)}</i>Ajuste</button>
       </div>
 
       <div class="feed-cap">

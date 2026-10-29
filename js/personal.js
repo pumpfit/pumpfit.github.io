@@ -16,9 +16,9 @@ const redraw = () => bus.render();
 export function nav(r) {
   const v = r.path[0] || 'hoje';
   const s = get();
-  const msg = s.alunos.some(a => naoLidas(s, a.id));
+  const msg = s.alunos.filter(a => naoLidas(s, a.id)).length;
   return [
-    { href: '#/p/hoje', label: 'Hoje', icon: 'hoje', cur: v === 'hoje', dot: Object.values(s.mudou || {}).some(m => !m.visto) },
+    { href: '#/p/hoje', label: 'Hoje', icon: 'hoje', cur: v === 'hoje', dot: Object.values(s.mudou || {}).filter(m => !m.visto).length },
     { href: '#/p/alunos', label: 'Alunos', icon: 'alunos', cur: v === 'alunos' || v === 'aluno', dot: msg },
     { href: '#/p/treinos', label: 'Treinos', icon: 'peso', cur: v === 'treinos' },
     { href: '#/p/agenda', label: 'Agenda', icon: 'agenda', cur: v === 'agenda' },
@@ -73,7 +73,7 @@ function alertas(s) {
   return out;
 }
 
-// Painel de partidas: aulas de hoje em ordem de horário; feitas descem para o fim, riscadas;
+// Painel de partidas: aulas de hoje em ordem de horário; feitas ficam no lugar, riscadas;
 // o que o aluno mudou (remarcou, marcou, cancelou) acende em laranja até o personal tocar em "Visto".
 function partidas(s) {
   const mud = s.mudou || {};
@@ -83,8 +83,7 @@ function partidas(s) {
     const [d, h] = k.split('-');
     if (+d === HOJE && m.tipo === 'cancelou' && !m.visto && !s.agenda[d]?.[h]) lista.push({ h, id: m.id, chg: m, gone: true });
   }
-  const ordem = x => (x.feita ? 1 : 0);
-  return lista.sort((a, b) => ordem(a) - ordem(b) || a.h.localeCompare(b.h));
+  return lista.sort((a, b) => a.h.localeCompare(b.h));
 }
 const SIT_CHG = m => m.tipo === 'remarcou' ? `Remarcou · era ${m.era}` : m.tipo === 'cancelou' ? 'Cancelou' : 'Marcou agora';
 function situacao(x) {
@@ -120,7 +119,7 @@ function hojeV() {
   const nome = (C.conta()?.nome || '[Nome]').split(' ')[0];
   return html`<div class="page ${ui.anim ? 'enter' : ''}">
     <header class="ph">
-      <div><h1>Hoje</h1><p class="meta">Ter 27 out · Bom dia, ${nome}</p></div>
+      <div><h1>Hoje</h1><p class="meta"><span class="mono">Ter 27 out</span> · Bom dia, ${nome}</p></div>
       <div class="ph-actions"><a class="btn" href="#/p/treinos">Montar treino</a><button type="button" class="btn p" data-act="novoAluno">${ic('mais', 18)}Novo aluno</button></div>
     </header>
 
@@ -142,7 +141,7 @@ function hojeV() {
             const k = FICHA_HOJE[a?.obj] || 'B';
             return html`<tr class="${sit.cls}" data-flip="${x.id}" data-st="${sit.st}">
               <td class="h">${flap(x.h, 'h-' + x.id)}</td>
-              <td class="who"><a href="#/p/aluno/${x.id}">${a?.nome || 'Aluno'}</a><span>${a?.obj || ''}</span></td>
+              <td class="who"><a href="#/p/aluno/${x.id}" title="${a?.nome || 'Aluno'}">${a?.nome || 'Aluno'}</a><span>${a?.obj || ''}</span></td>
               <td class="fx">${k} · ${NOME_FICHA[k]}</td>
               <td class="st"><b>${sit.txt}</b>${x.chg ? html`<button type="button" class="btn sm" data-act="visto" data-k="${HOJE}-${x.h}">Visto</button>`
                 : x.prox ? html`<button type="button" class="btn sm" data-act="presenca" data-dia="${HOJE}" data-hora="${x.h}">Presença</button>` : ''}</td>

@@ -119,3 +119,5 @@
 
 .lp .btn.p { background: var(--sign); border-color: var(--sign); color: var(--on-sign); }
 .lp .btn.p:hover { background: #FFD23F; border-color: #FFD23F; }
+
+@media (max-width: 759px) { .lp-title { font-size: clamp(48px, 14vw, 72px); max-width: none; } }

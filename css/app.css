@@ -427,3 +427,40 @@ a.row:hover, button.row:hover { background: var(--s2); }
 .sf { gap: .04em; }
 .sf i { min-width: .58em; }
 :root { --tile: #1C1F24; }
+
+/* Ajustes da revisão final */
+/* Treino: só o que está acontecendo agora é verde; o que já passou vira marca impressa */
+.ck.on { background: transparent; border-color: var(--tx3); color: var(--tx2); }
+.btn.done .ic { color: var(--tx2); }
+.prog i b { background: var(--tx3); }
+.prog i.cur b { background: var(--live); }
+.rest .num .sf i { color: #F2F2EE; }
+.rest:not(.pronto) { border-color: var(--live); }
+.feed-media { gap: 10px; }
+.feed-media h1 { font-size: clamp(44px, 13vw, 76px); line-height: .92; text-wrap: balance; }
+.feed-n .sf { font-size: clamp(76px, 24vw, 150px); }
+@media (max-height: 700px) { .feed-media h1 { font-size: 40px; } }
+/* Contagem de novidades no menu (número, não só um ponto) */
+.nav .dot.n, .tab .dot.n { width: auto; height: auto; min-width: 22px; padding: 2px 6px; display: inline-grid; place-items: center; font-family: var(--fm); font-size: 12px; font-weight: 700; line-height: 1.2; color: #FFFFFF; background: var(--sign-dot); }
+.tab .dot.n { top: 4px; right: calc(50% - 26px); min-width: 20px; font-size: 11px; box-shadow: 0 0 0 2px var(--sign); }
+/* Linhas do painel não quebram: nome numa linha, com reticências */
+.brd .who { max-width: 0; width: 100%; }
+.brd .who a, .brd .who span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1359px) { .brd .fx { display: none; } }
+@media (max-width: 559px) { .brd .who { max-width: none; width: auto; min-width: 0; } }
+.al .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.al .grow { min-width: 0; }
+@media (max-width: 559px) { .al .t { white-space: normal; } }
+/* Data em mono, saudação em texto normal */
+.ph .meta { font-family: var(--f); font-size: 15px; letter-spacing: 0; }
+.ph .meta .mono { font-size: 13.5px; letter-spacing: .02em; }
+/* Tema claro: papel do cartão de embarque, branco, separado por linhas */
+[data-theme="light"] { --bg: #FFFFFF; --s1: #FFFFFF; --s2: #F3F4F6; --s3: #E4E6EA; }
+.al .t { white-space: normal; }
+@media (min-width: 560px) {
+  .brd .st { width: 1%; }
+  .brd .st b { white-space: nowrap; max-width: none; }
+}
+@media (min-width: 1200px) { .lg-21 { grid-template-columns: minmax(0, 1.5fr) minmax(360px, 1fr); } }
+
+.rest .bar > i { background: var(--live); }

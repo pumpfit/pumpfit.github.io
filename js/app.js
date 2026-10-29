@@ -48,7 +48,9 @@ function layout(role, itens, conteudo) {
   const quem = role === 'p' ? 'Personal · ' + (C.conta()?.nome || '[Nome do personal]') : 'Aluno · ' + (C.alunoConta()?.nome || 'Juliana Costa (exemplo)');
   const escuro = document.documentElement.dataset.theme !== 'light';
   const temaBtn = (cls) => html`<button type="button" class="${cls}" data-act="tema" aria-label="${escuro ? 'Usar tema claro' : 'Usar tema escuro'}">${ic(escuro ? 'sol' : 'lua', 18)}${cls.includes('icon') ? '' : (escuro ? 'Tema claro' : 'Tema escuro')}</button>`;
-  const link = (i, cls = '') => html`<a href="${i.href}" class="${cls}" ${i.cur ? raw('aria-current="page"') : ''}>${ic(i.icon, 22)}<span>${i.label}</span>${i.dot ? html`<span class="dot" aria-label="Novidade"></span>` : ''}</a>`;
+  const link = (i, cls = '') => html`<a href="${i.href}" class="${cls}" ${i.cur ? raw('aria-current="page"') : ''}>${ic(i.icon, 22)}<span>${i.label}</span>${i.dot ? (typeof i.dot === 'number'
+    ? html`<span class="dot n" aria-label="${i.dot} ${i.dot > 1 ? 'novidades' : 'novidade'}">${i.dot}</span>`
+    : html`<span class="dot" aria-label="Novidade"></span>`) : ''}</a>`;
   return html`<div class="shell">
     <aside class="side" aria-label="Menu principal">
       ${marca}

@@ -15,7 +15,7 @@ const PASSOS = [
   ['Você acompanha', 'Resultado, peso, remarcações e mensagens chegam ao vivo.']
 ];
 
-// Alunos do exemplo e os quadros da demonstração (cada quadro é o painel inteiro, já em ordem).
+// Alunos do exemplo e os quadros da demonstração (cada quadro é o painel inteiro, sempre em ordem de horário).
 const ALUNOS = {
   marina: ['Marina Souza', 'Definição', 'B · Inferiores'],
   carla: ['Carla Bento', 'Ganhar massa', 'A · Superiores'],
@@ -23,10 +23,10 @@ const ALUNOS = {
   pedro: ['Pedro Alves', 'Emagrecer', 'C · Core e braços']
 };
 const QUADROS = [
-  [['juliana', '09:00', 'prox'], ['pedro', '10:30', 'conf'], ['carla', '18:00', 'chg'], ['marina', '07:00', 'feita']],
-  [['pedro', '10:30', 'prox'], ['carla', '18:00', 'chg'], ['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita']],
-  [['pedro', '10:30', 'prox'], ['carla', '18:00', 'conf'], ['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita']],
-  [['carla', '08:00', 'prox'], ['juliana', '09:00', 'conf'], ['pedro', '10:30', 'conf'], ['marina', '07:00', 'feita']]
+  [['marina', '07:00', 'feita'], ['juliana', '09:00', 'prox'], ['pedro', '10:30', 'conf'], ['carla', '18:00', 'chg']],
+  [['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita'], ['pedro', '10:30', 'prox'], ['carla', '18:00', 'chg']],
+  [['marina', '07:00', 'feita'], ['juliana', '09:00', 'feita'], ['pedro', '10:30', 'prox'], ['carla', '18:00', 'conf']],
+  [['marina', '07:00', 'feita'], ['carla', '08:00', 'prox'], ['juliana', '09:00', 'conf'], ['pedro', '10:30', 'conf']]
 ];
 // Placas da faixa que corre: setas e destinos, como no saguão do aeroporto.
 const PLACAS = [['seta', 'Treinos'], ['evo', 'Evolução'], ['agenda', 'Agenda'], ['pix', 'Mensalidades'], ['chat', 'Chat com o aluno'], ['sino', 'Alertas'], ['alunos', 'Alunos']];

@@ -43,7 +43,8 @@ const P = {
   sair: '<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/>',
   pix: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v7h-6"/>',
   sino: '<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/>',
-  enviar: '<path d="M4 12 20 4l-6 16-3-7z"/>'
+  enviar: '<path d="M4 12 20 4l-6 16-3-7z"/>',
+  ajuste: '<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>'
 };
 export const ic = (n, s = 20) => raw(`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n] || ''}</svg>`);
 
