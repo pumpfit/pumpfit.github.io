@@ -464,3 +464,8 @@ a.row:hover, button.row:hover { background: var(--s2); }
 @media (min-width: 1200px) { .lg-21 { grid-template-columns: minmax(0, 1.5fr) minmax(360px, 1fr); } }
 
 .rest .bar > i { background: var(--live); }
+/* Rodada 2 da revisão */
+@media (max-width: 1359px) and (min-width: 560px) { .brd .fx { display: table-cell; } .brd .fx-n { display: none; } }
+.al .t { text-wrap: balance; }
+.feed-n .sf { font-size: clamp(76px, min(32vw, 20vh), 176px); }
+.feed-media h1 { font-size: clamp(44px, min(14vw, 8.5vh), 84px); }

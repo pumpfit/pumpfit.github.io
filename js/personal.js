@@ -142,7 +142,7 @@ function hojeV() {
             return html`<tr class="${sit.cls}" data-flip="${x.id}" data-st="${sit.st}">
               <td class="h">${flap(x.h, 'h-' + x.id)}</td>
               <td class="who"><a href="#/p/aluno/${x.id}" title="${a?.nome || 'Aluno'}">${a?.nome || 'Aluno'}</a><span>${a?.obj || ''}</span></td>
-              <td class="fx">${k} · ${NOME_FICHA[k]}</td>
+              <td class="fx" title="Ficha ${k} · ${NOME_FICHA[k]}">${k}<span class="fx-n"> · ${NOME_FICHA[k]}</span></td>
               <td class="st"><b>${sit.txt}</b>${x.chg ? html`<button type="button" class="btn sm" data-act="visto" data-k="${HOJE}-${x.h}">Visto</button>`
                 : x.prox ? html`<button type="button" class="btn sm" data-act="presenca" data-dia="${HOJE}" data-hora="${x.h}">Presença</button>` : ''}</td>
             </tr>`;
