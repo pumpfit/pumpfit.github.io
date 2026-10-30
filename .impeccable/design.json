@@ -1,0 +1,749 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-29T21:58:44+00:00",
+  "title": "Design System: Pump",
+  "extensions": {
+    "colorMeta": {
+      "sign-yellow": {
+        "role": "primary",
+        "displayName": "Airport-Sign Yellow",
+        "canonical": "#FFC400",
+        "tonalRamp": [
+          "#3D2E00",
+          "#664D00",
+          "#8F6C00",
+          "#B88A00",
+          "#E0A900",
+          "#FFC400",
+          "#FFD23F",
+          "#FFF0BF"
+        ]
+      },
+      "sign-ink": {
+        "role": "primary",
+        "displayName": "Sign Ink",
+        "canonical": "#101215",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "sign-hover": {
+        "role": "primary",
+        "displayName": "Sign Hover Wash",
+        "canonical": "rgba(16, 18, 21, .1)"
+      },
+      "sign-count": {
+        "role": "primary",
+        "displayName": "Sign Count Red",
+        "canonical": "#C2300A",
+        "tonalRamp": [
+          "#2E0B02",
+          "#511404",
+          "#741D06",
+          "#9A2608",
+          "#C2300A",
+          "#E0553A",
+          "#EE8F7C",
+          "#F9D3CB"
+        ]
+      },
+      "board-ground": {
+        "role": "neutral",
+        "displayName": "Board Ground",
+        "canonical": "#101215",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-panel": {
+        "role": "neutral",
+        "displayName": "Board Panel",
+        "canonical": "#171A1E",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-panel-raised": {
+        "role": "neutral",
+        "displayName": "Board Panel Raised",
+        "canonical": "#1E2227",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-panel-deep": {
+        "role": "neutral",
+        "displayName": "Board Panel Deep",
+        "canonical": "#2A2F36",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-rule": {
+        "role": "neutral",
+        "displayName": "Board Rule",
+        "canonical": "#262A30",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#3A4048",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-ink": {
+        "role": "neutral",
+        "displayName": "Board Ink",
+        "canonical": "#F2F2EE",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-ink-secondary": {
+        "role": "neutral",
+        "displayName": "Board Ink Secondary",
+        "canonical": "#B0B6BE",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "board-ink-tertiary": {
+        "role": "neutral",
+        "displayName": "Board Ink Tertiary",
+        "canonical": "#8E959E",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "change-signal": {
+        "role": "secondary",
+        "displayName": "Signal Red-Orange",
+        "canonical": "#FF4D1F",
+        "tonalRamp": [
+          "#3A0E02",
+          "#661905",
+          "#8F2408",
+          "#B32F0B",
+          "#D23A10",
+          "#FF4D1F",
+          "#FF7048",
+          "#FFD0C2"
+        ]
+      },
+      "change-ink": {
+        "role": "secondary",
+        "displayName": "Change Ink",
+        "canonical": "#FF7048",
+        "tonalRamp": [
+          "#3A0E02",
+          "#661905",
+          "#8F2408",
+          "#B32F0B",
+          "#D23A10",
+          "#FF4D1F",
+          "#FF7048",
+          "#FFD0C2"
+        ]
+      },
+      "change-wash": {
+        "role": "secondary",
+        "displayName": "Change Wash",
+        "canonical": "rgba(255, 77, 31, .14)"
+      },
+      "live-green": {
+        "role": "tertiary",
+        "displayName": "Boarding Green",
+        "canonical": "#3DDC84",
+        "tonalRamp": [
+          "#07140C",
+          "#0A3B21",
+          "#0B5C33",
+          "#0B7A41",
+          "#0E8A4A",
+          "#2BB86A",
+          "#3DDC84",
+          "#C5F5DA"
+        ]
+      },
+      "live-wash": {
+        "role": "tertiary",
+        "displayName": "Live Wash",
+        "canonical": "rgba(61, 220, 132, .11)"
+      },
+      "on-live": {
+        "role": "tertiary",
+        "displayName": "On Live",
+        "canonical": "#07140C",
+        "tonalRamp": [
+          "#07140C",
+          "#0A3B21",
+          "#0B5C33",
+          "#0B7A41",
+          "#0E8A4A",
+          "#2BB86A",
+          "#3DDC84",
+          "#C5F5DA"
+        ]
+      },
+      "flap-tile": {
+        "role": "neutral",
+        "displayName": "Flap Tile",
+        "canonical": "#1C1F24",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "flap-cut": {
+        "role": "neutral",
+        "displayName": "Flap Cut",
+        "canonical": "rgba(0, 0, 0, .6)"
+      },
+      "flap-spent": {
+        "role": "neutral",
+        "displayName": "Flap Spent",
+        "canonical": "#7D848D",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "feed-ground": {
+        "role": "neutral",
+        "displayName": "Feed Black",
+        "canonical": "#0A0B0D",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#101215",
+          "#171A1E",
+          "#1E2227",
+          "#2A2F36",
+          "#3A4048",
+          "#8E959E",
+          "#F2F2EE"
+        ]
+      },
+      "pass-stock": {
+        "role": "neutral",
+        "displayName": "Pass Stock",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#101215",
+          "#474D55",
+          "#5C626B",
+          "#8E959E",
+          "#B0B6BE",
+          "#E4E6EA",
+          "#F3F4F6",
+          "#FFFFFF"
+        ]
+      },
+      "pass-ink-secondary": {
+        "role": "neutral",
+        "displayName": "Pass Ink Secondary",
+        "canonical": "#474D55",
+        "tonalRamp": [
+          "#101215",
+          "#474D55",
+          "#5C626B",
+          "#8E959E",
+          "#B0B6BE",
+          "#E4E6EA",
+          "#F3F4F6",
+          "#FFFFFF"
+        ]
+      },
+      "light-panel-raised": {
+        "role": "neutral",
+        "displayName": "Light Panel Raised",
+        "canonical": "#F3F4F6",
+        "tonalRamp": [
+          "#101215",
+          "#474D55",
+          "#5C626B",
+          "#8E959E",
+          "#B0B6BE",
+          "#E4E6EA",
+          "#F3F4F6",
+          "#FFFFFF"
+        ]
+      },
+      "light-panel-deep": {
+        "role": "neutral",
+        "displayName": "Light Panel Deep",
+        "canonical": "#E4E6EA",
+        "tonalRamp": [
+          "#101215",
+          "#474D55",
+          "#5C626B",
+          "#8E959E",
+          "#B0B6BE",
+          "#E4E6EA",
+          "#F3F4F6",
+          "#FFFFFF"
+        ]
+      },
+      "light-ink-tertiary": {
+        "role": "neutral",
+        "displayName": "Light Ink Tertiary",
+        "canonical": "#5C626B",
+        "tonalRamp": [
+          "#101215",
+          "#474D55",
+          "#5C626B",
+          "#8E959E",
+          "#B0B6BE",
+          "#E4E6EA",
+          "#F3F4F6",
+          "#FFFFFF"
+        ]
+      },
+      "light-rule": {
+        "role": "neutral",
+        "displayName": "Light Rule",
+        "canonical": "rgba(16, 18, 21, .12)"
+      },
+      "light-rule-strong": {
+        "role": "neutral",
+        "displayName": "Light Strong Rule",
+        "canonical": "rgba(16, 18, 21, .26)"
+      },
+      "light-change-signal": {
+        "role": "secondary",
+        "displayName": "Signal Red-Orange (light)",
+        "canonical": "#D23A10",
+        "tonalRamp": [
+          "#3A0E02",
+          "#661905",
+          "#8F2408",
+          "#B32F0B",
+          "#D23A10",
+          "#FF4D1F",
+          "#FF7048",
+          "#FFD0C2"
+        ]
+      },
+      "light-change-ink": {
+        "role": "secondary",
+        "displayName": "Change Ink (light)",
+        "canonical": "#B32F0B",
+        "tonalRamp": [
+          "#3A0E02",
+          "#661905",
+          "#8F2408",
+          "#B32F0B",
+          "#D23A10",
+          "#FF4D1F",
+          "#FF7048",
+          "#FFD0C2"
+        ]
+      },
+      "light-live-green": {
+        "role": "tertiary",
+        "displayName": "Boarding Green (light)",
+        "canonical": "#0E8A4A",
+        "tonalRamp": [
+          "#07140C",
+          "#0A3B21",
+          "#0B5C33",
+          "#0B7A41",
+          "#0E8A4A",
+          "#2BB86A",
+          "#3DDC84",
+          "#C5F5DA"
+        ]
+      },
+      "light-live-ink": {
+        "role": "tertiary",
+        "displayName": "Live Ink (light)",
+        "canonical": "#0B7A41",
+        "tonalRamp": [
+          "#07140C",
+          "#0A3B21",
+          "#0B5C33",
+          "#0B7A41",
+          "#0E8A4A",
+          "#2BB86A",
+          "#3DDC84",
+          "#C5F5DA"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles, landing headline, workout exercise name."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section and card headings."
+      },
+      "title": {
+        "displayName": "Title / Board Number",
+        "purpose": "Departure times, tile numbers, steppers and set rows; always tabular."
+      },
+      "flap": {
+        "displayName": "Flap",
+        "purpose": "Split-flap tiles for times, counts and the workout exercise number."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text and inputs (16px to prevent zoom)."
+      },
+      "body-strong": {
+        "displayName": "Body Strong",
+        "purpose": "Buttons, row titles, nav items."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Mono uppercase labels that name a data value."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Departures status cell and stamps."
+      }
+    },
+    "shadows": [
+      {
+        "name": "flap-plate",
+        "value": "0 1px 0 rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.05)",
+        "purpose": "Every split-flap character tile."
+      },
+      {
+        "name": "sheet",
+        "value": "0 -12px 40px rgba(0,0,0,.35)",
+        "purpose": "Phone bottom sheet over a 62% black veil."
+      },
+      {
+        "name": "dialog",
+        "value": "0 24px 64px rgba(0,0,0,.45)",
+        "purpose": "Centred dialog from 768px."
+      },
+      {
+        "name": "savebar",
+        "value": "0 8px 24px rgba(0,0,0,.3)",
+        "purpose": "Sticky unsaved-changes bar."
+      },
+      {
+        "name": "toast",
+        "value": "0 10px 30px rgba(0,0,0,.35)",
+        "purpose": "Inverted status toast."
+      },
+      {
+        "name": "specimen",
+        "value": "0 24px 60px -28px rgba(0,0,0,.55)",
+        "purpose": "Landing live departures board."
+      },
+      {
+        "name": "nav-scrolled",
+        "value": "0 6px 18px rgba(0,0,0,.28)",
+        "purpose": "Landing nav after the page scrolls."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.2, .8, .2, 1)",
+        "purpose": "Default easing for state transitions, entries, FLIP rerank, sheets."
+      },
+      {
+        "name": "flip-tile",
+        "value": "virar .5s cubic-bezier(.3, .7, .2, 1), 34ms stagger per character",
+        "purpose": "Split-flap character turn; only changed characters, all on screen entry."
+      },
+      {
+        "name": "flip-rerank",
+        "value": "460ms cubic-bezier(.2,.8,.2,1), transform only",
+        "purpose": "Board row moves to its new time slot keeping identity."
+      },
+      {
+        "name": "enter",
+        "value": "rise .3s, translateY(6px) to none",
+        "purpose": "Page entry; list stagger in 30ms steps up to 120ms."
+      },
+      {
+        "name": "feed-snap",
+        "value": "snap .38s, translateY(14%) to none",
+        "purpose": "Next exercise entering the workout feed."
+      },
+      {
+        "name": "landing-ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Landing settle-in and scroll reveals."
+      },
+      {
+        "name": "headline-wipe",
+        "value": "clip-path .9s cubic-bezier(.7, 0, .2, 1)",
+        "purpose": "Landing headings wipe open on reveal."
+      },
+      {
+        "name": "sign-marquee",
+        "value": "38s linear infinite",
+        "purpose": "Landing yellow plate strip; pauses on hover."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation and transition none",
+        "purpose": "prefers-reduced-motion: instant swaps; the orange hold stays."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "board-reflow",
+        "value": "560px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "rail",
+        "value": "1024px"
+      },
+      {
+        "name": "today-split",
+        "value": "1200px"
+      },
+      {
+        "name": "full-board",
+        "value": "1360px"
+      },
+      {
+        "name": "landing-md",
+        "value": "760px"
+      },
+      {
+        "name": "landing-hero",
+        "value": "1000px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Board-white primary action (Novo aluno, Começar treino).",
+      "html": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;padding:16px;background:#101215\"><button class=\"ds-btn ds-btn-p\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg>Novo aluno</button></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-btn{min-height:44px;padding:0 16px;border-radius:var(--r);border:1.5px solid var(--line2);background:transparent;color:var(--tx);display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px var(--f);cursor:pointer;transition:transform .12s var(--ease),background-color .15s,border-color .15s}.ds-btn:hover{background:var(--s2);border-color:var(--tx3)}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2px solid var(--tx);outline-offset:2px}.ds-btn-p{background:var(--a);border-color:var(--a);color:var(--on-a);font-weight:700}.ds-btn-p:hover{background:color-mix(in srgb,var(--a) 86%,var(--bg));border-color:var(--a)}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Default 1.5px outlined action; warning variant for overdue actions.",
+      "html": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;padding:16px;background:#101215\"><button class=\"ds-btn\">Montar treino</button><button class=\"ds-btn ds-btn-warn\">Cobrar por Pix</button></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-btn{min-height:44px;padding:0 16px;border-radius:var(--r);border:1.5px solid var(--line2);background:transparent;color:var(--tx);display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px var(--f);cursor:pointer;transition:transform .12s var(--ease),background-color .15s,border-color .15s}.ds-btn:hover{background:var(--s2);border-color:var(--tx3)}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2px solid var(--tx);outline-offset:2px}.ds-btn-warn{color:var(--chg-ink);border-color:color-mix(in srgb,var(--chg) 55%,transparent)}.ds-btn-warn:hover{background:var(--chg-bg)}"
+    },
+    {
+      "name": "Sign Nav Rail",
+      "kind": "nav",
+      "refersTo": "nav-shell",
+      "description": "Airport-sign yellow rail with ink items, inverted active block, square count badge.",
+      "html": "<nav class=\"ds-side\"><strong class=\"ds-wm\">Pump</strong><a class=\"ds-nav\" aria-current=\"page\" href=\"#\">Hoje<span class=\"ds-dot\">2</span></a><a class=\"ds-nav\" href=\"#\">Alunos</a><a class=\"ds-nav\" href=\"#\">Agenda<span class=\"ds-dot\">1</span></a><a class=\"ds-nav\" href=\"#\">Finanças</a></nav>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-side{display:flex;flex-direction:column;gap:2px;width:248px;padding:20px 14px;background:var(--sign);color:var(--on-sign);font-family:var(--f)}.ds-wm{font:700 28px/1 var(--fd);padding:0 12px 18px}.ds-nav{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r);color:var(--on-sign);font-weight:600;font-size:16px;text-decoration:none;transition:background-color .15s,color .15s}.ds-nav:hover{background:var(--sign-hi)}.ds-nav:focus-visible{outline:2px solid var(--on-sign);outline-offset:2px}.ds-nav[aria-current=\"page\"]{background:var(--on-sign);color:var(--sign);font-weight:700}.ds-dot{margin-left:auto;min-width:22px;padding:2px 6px;display:inline-grid;place-items:center;font:700 12px/1.2 var(--fm);color:#fff;background:var(--sign-dot)}"
+    },
+    {
+      "name": "Filter Chips",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Squared outlined filters; pressed fills with board ink.",
+      "html": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;padding:16px;background:#101215\"><button class=\"ds-chip\" aria-pressed=\"true\">Todos</button><button class=\"ds-chip\" aria-pressed=\"false\">Em dia</button><button class=\"ds-chip\" aria-pressed=\"false\">Pendentes</button></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-chip{min-height:40px;padding:0 14px;border-radius:var(--r);border:1.5px solid var(--line2);background:transparent;color:var(--tx2);font:600 14px var(--f);cursor:pointer;transition:background-color .15s,color .15s,border-color .15s}.ds-chip:hover{color:var(--tx);border-color:var(--tx3)}.ds-chip:focus-visible{outline:2px solid var(--tx);outline-offset:2px}.ds-chip[aria-pressed=\"true\"]{background:var(--a);border-color:var(--a);color:var(--on-a)}"
+    },
+    {
+      "name": "Status Stamps",
+      "kind": "chip",
+      "refersTo": "stamp",
+      "description": "Printed status marks: outline at rest, filled live, orange changed, dashed and struck spent.",
+      "html": "<div style=\"display:flex;gap:8px;flex-wrap:wrap;padding:16px;background:#101215\"><span class=\"ds-stamp\">Em dia</span><span class=\"ds-stamp ds-on\">Agora</span><span class=\"ds-stamp ds-warn\">Remarcou</span><span class=\"ds-stamp ds-spent\">Feito</span></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-stamp{display:inline-flex;align-items:center;font:700 11.5px var(--fm);letter-spacing:.05em;text-transform:uppercase;padding:3px 7px;border-radius:var(--r);border:1px solid var(--line2);color:var(--tx2)}.ds-on{background:var(--live);border-color:var(--live);color:var(--on-live)}.ds-warn{color:var(--chg-ink);border-color:color-mix(in srgb,var(--chg) 60%,transparent);background:var(--chg-bg)}.ds-spent{color:var(--tx3);text-decoration:line-through;border-style:dashed}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Panel ground, 1.5px outline that turns to full ink on focus; no glow.",
+      "html": "<div style=\"padding:16px;background:#101215\"><label class=\"ds-field\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-4-4\"/></svg><input placeholder=\"Buscar por nome ou objetivo\"></label></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-field{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 14px;border-radius:var(--r);background:var(--s1);border:1.5px solid var(--line2);color:var(--tx2);transition:border-color .15s}.ds-field input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--tx);font:400 16px var(--f)}.ds-field input::placeholder{color:var(--tx3)}.ds-field:focus-within{border-color:var(--tx)}"
+    },
+    {
+      "name": "Number Tile",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Squared panel with a labelled number; alert variant in Change Wash.",
+      "html": "<div style=\"display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px;background:#101215\"><div class=\"ds-tile\"><span class=\"ds-lbl\">Em dia</span><span class=\"ds-num\">24</span></div><div class=\"ds-tile ds-alert\"><span class=\"ds-lbl\">Pendentes</span><span class=\"ds-num\">6</span></div></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-tile{display:flex;flex-direction:column;gap:4px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-height:96px;transition:border-color .2s}.ds-tile:hover{border-color:var(--line2)}.ds-lbl{font:500 11.5px var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}.ds-num{font:600 30px/1.05 var(--fd);font-variant-numeric:tabular-nums;color:var(--tx)}.ds-alert{background:var(--chg-bg);border-color:transparent}.ds-alert .ds-lbl,.ds-alert .ds-num{color:var(--chg-ink)}"
+    },
+    {
+      "name": "Split-Flap Letreiro",
+      "kind": "custom",
+      "refersTo": "flap-tile",
+      "description": "Each character on a dark tile with a hairline cut; changed characters flip in.",
+      "html": "<div style=\"padding:20px;background:#101215;font-size:40px;display:flex;gap:20px\"><span class=\"ds-sf\"><i>0</i><i>7</i><i class=\"p\">:</i><i>3</i><i>0</i></span><span class=\"ds-sf ds-live\"><i>0</i><i>9</i><i class=\"p\">:</i><i>0</i><i>0</i></span><span class=\"ds-sf ds-chg\"><i>1</i><i>6</i><i class=\"p\">:</i><i>0</i><i>0</i></span></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-sf{display:inline-flex;gap:.04em;font-family:var(--fd);font-weight:600;font-variant-numeric:tabular-nums;line-height:1}.ds-sf i{position:relative;display:inline-block;min-width:.58em;padding:.09em .05em .07em;text-align:center;font-style:normal;background:var(--tile);color:#F2F2EE;border-radius:2px;box-shadow:0 1px 0 rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05);animation:ds-virar .5s cubic-bezier(.3,.7,.2,1) both}.ds-sf i:nth-child(2){animation-delay:34ms}.ds-sf i:nth-child(3){animation-delay:68ms}.ds-sf i:nth-child(4){animation-delay:102ms}.ds-sf i:nth-child(5){animation-delay:136ms}.ds-sf i::after{content:\"\";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.6)}.ds-sf i.p{min-width:.34em}.ds-live i{color:#3DDC84}.ds-chg i{color:#FF7048}@keyframes ds-virar{0%{transform:perspective(240px) rotateX(-92deg);filter:brightness(.55)}65%{transform:perspective(240px) rotateX(14deg)}100%{transform:none;filter:none}}@media (prefers-reduced-motion:reduce){.ds-sf i{animation:none}}"
+    },
+    {
+      "name": "Departures Board Rows",
+      "kind": "custom",
+      "refersTo": "flap-tile",
+      "description": "Hairline table rows: done struck, now in Live Wash, changed in Change Wash with Visto.",
+      "html": "<table class=\"ds-brd\"><thead><tr><th>Hora</th><th>Aluno</th><th>Situação</th></tr></thead><tbody><tr class=\"ds-done\"><td class=\"ds-h\">07:00</td><td>Exemplo Ana</td><td class=\"ds-st\"><b>Feito</b></td></tr><tr class=\"ds-now\"><td class=\"ds-h\">09:00</td><td>Exemplo Bruno</td><td class=\"ds-st\"><b>Próxima</b></td></tr><tr class=\"ds-chg\"><td class=\"ds-h\">11:00</td><td>Exemplo Carla</td><td class=\"ds-st\"><b>Remarcou p/ 16h</b><button class=\"ds-visto\">Visto</button></td></tr></tbody></table>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-brd{width:100%;border-collapse:collapse;background:var(--bg);color:var(--tx);font:400 16px var(--f)}.ds-brd th{font:500 11px var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);text-align:left;padding:0 8px 8px 10px;border-bottom:1px solid var(--line2)}.ds-brd td{height:60px;padding:8px 8px 8px 10px;border-bottom:1px solid var(--line);transition:background-color .3s}.ds-h{font:600 26px var(--fd);font-variant-numeric:tabular-nums;width:90px}.ds-st b{font:700 12.5px var(--fm);letter-spacing:.05em;text-transform:uppercase}.ds-done td{color:var(--tx3)}.ds-done .ds-st b{text-decoration:line-through}.ds-now td{background:var(--live-bg)}.ds-now .ds-st b,.ds-now .ds-h{color:var(--live-ink)}.ds-chg td{background:var(--chg-bg)}.ds-chg .ds-st b,.ds-chg .ds-h{color:var(--chg-ink)}.ds-visto{margin-left:8px;min-height:38px;padding:0 12px;border-radius:var(--r);border:1.5px solid var(--line2);background:transparent;color:var(--tx);font:600 14px var(--f);cursor:pointer}.ds-visto:hover{background:var(--s2);border-color:var(--tx3)}.ds-visto:focus-visible{outline:2px solid var(--tx);outline-offset:2px}"
+    },
+    {
+      "name": "Boarding Pass",
+      "kind": "card",
+      "refersTo": "boarding-pass",
+      "description": "White pass stock with a dashed perforation above the action stub.",
+      "html": "<div style=\"padding:16px;background:#101215\"><section class=\"ds-pass\"><span class=\"ds-plbl\">Treino de hoje · 9h</span><strong class=\"ds-pt\">Treino B · Costas</strong><div class=\"ds-stub\"><button class=\"ds-pb\">Começar treino</button><button class=\"ds-pb ds-out\">Ver exercícios</button></div></section></div>",
+      "css": ":host{--sign:#FFC400;--on-sign:#101215;--sign-hi:rgba(16,18,21,.1);--sign-dot:#C2300A;--bg:#101215;--s1:#171A1E;--s2:#1E2227;--s3:#2A2F36;--line:#262A30;--line2:#3A4048;--tx:#F2F2EE;--tx2:#B0B6BE;--tx3:#8E959E;--a:#F2F2EE;--on-a:#101215;--chg:#FF4D1F;--chg-ink:#FF7048;--chg-bg:rgba(255,77,31,.14);--live:#3DDC84;--live-ink:#3DDC84;--live-bg:rgba(61,220,132,.11);--on-live:#07140C;--tile:#1C1F24;--r:2px;--ease:cubic-bezier(.2,.8,.2,1);--f:\"Barlow\",system-ui,sans-serif;--fd:\"Barlow Condensed\",\"Barlow\",system-ui,sans-serif;--fm:\"JetBrains Mono\",ui-monospace,monospace}.ds-pass{background:#fff;color:#101215;border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}.ds-plbl{font:500 11.5px var(--fm);letter-spacing:.06em;text-transform:uppercase;color:#474D55}.ds-pt{font:600 26px/1.05 var(--fd)}.ds-stub{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:14px;border-top:1.5px dashed rgba(16,18,21,.28)}.ds-pb{min-height:44px;border-radius:var(--r);border:1.5px solid #101215;background:#101215;color:#fff;font:600 15px var(--f);cursor:pointer;transition:background-color .15s}.ds-pb:hover{background:#2A2F36}.ds-pb:focus-visible{outline:2px solid #101215;outline-offset:2px}.ds-out{background:transparent;color:#101215}.ds-out:hover{background:rgba(16,18,21,.06)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Departures Board",
+    "overview": "Pump treats a solo trainer's day as an airport departures board read under signage. The shell (desktop side rail, phone top bar and tab bar, landing nav, the scrolling plate strip) is airport-sign yellow with black ink; everything inside the shell is the board itself: a dark ground, hairline-ruled tables, times and headline numbers set on split-flap tiles that physically turn over when their value changes. The light theme is the boarding pass: white stock, black ink, perforated dividers.\n\nDensity is high and earned. Information lives in ruled rows and ruled bands of numbers, not in inflated cards. State is printed, not decorated: a status is a square stamp with an outline at rest, filled when it is happening now, struck through and dashed once it has passed. Two colours carry meaning and nothing else: signal red-orange for \"changed, needs you\" (held until the trainer taps Visto) and boarding green for \"happening now\". The student's guided workout is the same world turned to full screen: one exercise per view on the deepest black, a huge flap number, an action stack on the right.\n\nConfirmed rejections from the direction contract and the build: no rounded KPI cards on a grey dashboard, no capsule pills, no glass, no glow, no gradients, no coloured side-stripe accents.",
+    "keyCharacteristics": [
+      "Yellow sign shell, dark board interior; light theme is white boarding-pass stock.",
+      "Split-flap tiles for times, counts and the workout exercise number; they flip only the characters that changed.",
+      "Square corners everywhere (2px), 1.5px outlines on controls, 1px hairlines on tables and bands.",
+      "Orange means changed, green means now; neither is ever used for decoration.",
+      "Barlow for reading, Barlow Condensed for times, titles and numbers, JetBrains Mono for labels, codes and statuses."
+    ],
+    "rules": [
+      {
+        "name": "The Two Signals Rule",
+        "body": "Orange means \"changed, needs you\" and green means \"happening now\". Nothing else gets either colour: no orange for emphasis, no green for success decoration. A finished set or a paid bill becomes a neutral printed mark, not green.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sign Shell Rule",
+        "body": "Yellow belongs to the wayfinding layer (rail, bars, nav, plates) and is never used for content, data or state inside the board. On yellow, everything is Sign Ink.",
+        "section": "colors"
+      },
+      {
+        "name": "The Held Change Rule",
+        "body": "A changed item stays orange until the trainer acknowledges it (Visto). The colour is a hold, not a flash.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Board Rule",
+        "body": "Every number that can change (times, counts, loads, reps, timers) uses tabular figures in Barlow Condensed so columns never jitter when a value flips.",
+        "section": "typography"
+      },
+      {
+        "name": "The Labels Label Data Rule",
+        "body": "Mono uppercase labels name a value directly beneath or beside them (a band cell, a tile, a pass field, a table column). They do not sit above section headings as decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Board Rule",
+        "body": "Nothing inside the board casts a shadow. If a surface is part of the day's data, it separates by hairline or tone; only overlays float.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep every corner at 2px and every control outline at 1.5px; the only rounder corner is the phone sheet's 6px top.",
+      "**Do** put the shell in Airport-Sign Yellow with Sign Ink, and keep yellow out of the board's data and states.",
+      "**Do** set times, counts and the workout number as split-flap tiles in Barlow Condensed tabular, flipping only the characters that changed.",
+      "**Do** reserve orange for \"changed, needs you\" and green for \"happening now\", and hold the orange until it is acknowledged.",
+      "**Do** separate data with hairlines and ruled bands instead of wrapping every number in a card.",
+      "**Do** mark status as printed stamps: outline at rest, filled when live, dashed and struck when spent.",
+      "**Do** animate only transform, opacity and clip-path, and drop all motion under prefers-reduced-motion.",
+      "**Do** keep touch targets at 44px or larger, and 16px text in inputs."
+    ],
+    "donts": [
+      "**Don't** use rounded KPI cards, capsule pills, glass, glow, gradients or coloured side-stripe accents.",
+      "**Don't** use orange or green for emphasis, branding or success decoration.",
+      "**Don't** cast shadows from anything that belongs to the board; only overlays float.",
+      "**Don't** place mono uppercase labels above headings as eyebrows; labels name data.",
+      "**Don't** use circles for status dots, unread badges or change marks; they are squares (chart data points are the one round mark)."
+    ]
+  }
+}
