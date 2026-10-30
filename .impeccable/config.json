@@ -101,6 +101,51 @@
         ],
         "createdAt": "2026-10-29T21:40:40.277Z",
         "reason": "Jarvis: Eduardo pediu mais efeitos de movimento na pagina de entrada; a faixa de placas e decorativa (aria-hidden), repete os destinos do app, pausa com o mouse e para com reduzir movimento"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-30T14:47:27.221Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao (pasta ignorada pelo git); usa a fonte da direcao que nao foi escolhida"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-30T14:47:27.287Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao (pasta ignorada pelo git); usa a fonte da direcao que nao foi escolhida"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-30T14:47:27.353Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao (pasta ignorada pelo git); usa a fonte da direcao que nao foi escolhida"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-feed.html"
+        ],
+        "createdAt": "2026-10-30T14:47:27.419Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao (pasta ignorada pelo git); usa a fonte da direcao que nao foi escolhida"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-embarque.html"
+        ],
+        "createdAt": "2026-10-30T14:47:27.486Z",
+        "reason": "Jarvis: esboco descartavel da rodada de decisao (pasta ignorada pelo git); usa a fonte da direcao que nao foi escolhida"
       }
     ]
   }
